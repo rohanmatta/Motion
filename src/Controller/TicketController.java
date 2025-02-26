@@ -8,6 +8,9 @@ import Model.Support.Ticket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Ryan
+ */
 public class TicketController {
     private final List<Ticket> tickets;
     private final List<Ticket> archive;

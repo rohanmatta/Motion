@@ -5,6 +5,9 @@ import Model.Login.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Ryan
+ */
 public class Ticket {
     private List<Message> messages;
     private User user;

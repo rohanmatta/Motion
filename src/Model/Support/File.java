@@ -1,5 +1,8 @@
 package Model.Support;
 
+/**
+ * @author Ryan
+ */
 public class File {
     private String fileName;
     private java.io.File contents;

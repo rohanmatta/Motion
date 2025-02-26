@@ -1,5 +1,8 @@
 package Model.Support;
 
+/**
+ * @author Ryan
+ */
 public class Message {
     private String text;
     private File file;

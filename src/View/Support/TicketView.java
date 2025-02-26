@@ -6,6 +6,9 @@ import Model.Support.Message;
 import Model.Support.SupportUser;
 import Model.Support.Ticket;
 
+/**
+ * @author Ryan
+ */
 public class TicketView {
     private final TicketController controller;
     private Ticket ticket;

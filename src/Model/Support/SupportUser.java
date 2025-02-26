@@ -1,5 +1,8 @@
 package Model.Support;
 
+/**
+ * @author Ryan
+ */
 public class SupportUser {
     private String username;
     private String password;
