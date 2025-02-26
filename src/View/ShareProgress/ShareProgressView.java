@@ -1,6 +1,6 @@
 package View.ShareProgress;
 
-import Model.ShareProgress.User;
+import Model.Login.User;
 import Model.ShareProgress.Workout;
 import Model.ShareProgress.SocialMediaAccount;
 import Model.ShareProgress.Post;

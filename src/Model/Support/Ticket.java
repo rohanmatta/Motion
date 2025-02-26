@@ -1,6 +1,6 @@
 package Model.Support;
 
-import Model.ShareProgress.User;
+import Model.Login.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,6 @@
-package Model.ShareProgress;
+package Model.Login;
+
+import Model.ShareProgress.Workout;
 
 import java.util.List;
 

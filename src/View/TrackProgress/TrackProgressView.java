@@ -18,7 +18,7 @@ public class TrackProgressView {
     }
 
     /**
-     * Displays past workout sessions.
+     * Displays the past workout sessions.
      */
     public void displayPastWorkouts() {
         List<WorkoutSession> workoutSessions = trackProgressController.getUserWorkoutSessions(1); // Fetch user's workout history
@@ -28,7 +28,7 @@ public class TrackProgressView {
             return;
         }
 
-        System.out.println("=== Your Workout History ===");
+        System.out.println("{Your Workout History}");
         for (WorkoutSession session : workoutSessions) {
             System.out.println("Workout: " + session.getWorkoutName());
             System.out.println("Date: " + session.getSessionDate());
@@ -36,16 +36,15 @@ public class TrackProgressView {
             System.out.println("Reps: " + session.getProgressData().getReps());
             System.out.println("Duration: " + session.getProgressData().getDuration() + " minutes");
             System.out.println("Calories Burned: " + session.getProgressData().getCaloriesBurned());
-            System.out.println("---------------------------------");
         }
     }
 
     /**
-     * Displays progress trends over time.
+     * Displays the progress trends (over time).
      */
     public void displayProgressTrends() {
-        String progressTrends = trackProgressController.getProgressTrends(1); // Fetch user's progress analysis
-        System.out.println("=== Progress Trends ===");
+        String progressTrends = trackProgressController.getProgressTrends(1); // Fetches the  user's progress analysis using controller
+        System.out.println("{Progress Trends}");
         System.out.println(progressTrends);
     }
 }

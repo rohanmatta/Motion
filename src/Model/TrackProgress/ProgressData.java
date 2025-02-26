@@ -3,6 +3,11 @@ package Model.TrackProgress;
 /**
  * Tracks user workout performance and progress.
  */
+
+//By day or what?
+
+    //More well defined attributes for date 
+
 public class ProgressData {
     private int userId;
     private int sets;
@@ -12,16 +17,6 @@ public class ProgressData {
     private double weightLifted; // Optional: Track weights used (for strength workouts)
     private String notes; // Optional: User notes about their progress
 
-    /**
-     * Constructor to initialize progress data.
-     * @param userId The user's unique identifier.
-     * @param sets The number of sets completed.
-     * @param reps The number of reps performed.
-     * @param duration The workout duration in minutes.
-     * @param caloriesBurned The number of calories burned.
-     * @param weightLifted The weight lifted (if applicable).
-     * @param notes Any notes on the workout session.
-     */
     public ProgressData(int userId, int sets, int reps, double duration, double caloriesBurned, double weightLifted, String notes) {
         this.userId = userId;
         this.sets = sets;
@@ -84,6 +79,11 @@ public class ProgressData {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    //Update progress data
+
+    //Analyize progress data
+
 
     @Override
     public String toString() {

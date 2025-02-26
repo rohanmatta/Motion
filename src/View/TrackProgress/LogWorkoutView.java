@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
- * Provides a user interface for logging a new workout session.
+ * Provides UI for logging a new workout session.
  */
 public class LogWorkoutView {
     private TrackProgressController trackProgressController;
@@ -23,10 +23,10 @@ public class LogWorkoutView {
     }
 
     /**
-     * Displays the input form for logging a new workout.
+     * Input form for logging a new workout (Not needed now but can use later)
      */
     public void displayWorkoutLogForm() {
-        System.out.println("=== Log a New Workout ===");
+        System.out.println("{Log a New Workout}");
 
         System.out.print("Enter Workout Name: ");
         String workoutName = scanner.nextLine();
@@ -54,9 +54,9 @@ public class LogWorkoutView {
         ProgressData progressData = new ProgressData(1, sets, reps, duration, caloriesBurned, weightLifted, notes);
         WorkoutSession workoutSession = new WorkoutSession(1, workoutName, LocalDateTime.now(), progressData);
 
-        // Send the data to the controller for processing
+        // Sends the data to the controller for processing
         trackProgressController.updateProgress(1, progressData);
 
-        System.out.println("Workout logged successfully!");
+        System.out.println("Workout logged successfully!!!");
     }
 }
