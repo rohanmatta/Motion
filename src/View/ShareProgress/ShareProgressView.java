@@ -11,10 +11,9 @@ public class ShareProgressView {
         System.out.println("=== User Progress ===");
         System.out.println("Name: " + user.getUserName());
         System.out.println("Email: " + user.getUserEmail());
-        System.out.println("Workouts:");
         if (user.getWorkoutData() != null && !user.getWorkoutData().isEmpty()) {
             for (Workout workout : user.getWorkoutData()) {
-                System.out.println(workout);
+                System.out.println(workout.toString());
             }
         } else {
             System.out.println("No workout data available.");
@@ -24,12 +23,10 @@ public class ShareProgressView {
 
     public void displaySocialMediaPosts(SocialMediaAccount account) {
         System.out.println("=== Social Media Posts ===");
-        System.out.println("Platform: " + account.getPlatform());
-        System.out.println("Username: " + account.getUsername());
-        System.out.println("Posts:");
+        System.out.println(account.getActivitySummary());
         if (account.getPosts() != null && !account.getPosts().isEmpty()) {
             for (Post post : account.getPosts()) {
-                System.out.println(post);
+                System.out.println(post.getSummary());
             }
         } else {
             System.out.println("No posts available.");
