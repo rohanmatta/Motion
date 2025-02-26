@@ -46,4 +46,13 @@ public class Ticket {
     public void setSupportUsers(List<SupportUser> supportUsers) {
         this.supportUsers = supportUsers;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "messages=" + messages +
+                ", user=" + user +
+                ", supportUsers=" + supportUsers +
+                '}';
+    }
 }

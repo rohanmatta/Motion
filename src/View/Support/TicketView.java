@@ -7,7 +7,7 @@ import Model.Support.SupportUser;
 import Model.Support.Ticket;
 
 public class TicketView {
-    private TicketController controller;
+    private final TicketController controller;
     private Ticket ticket;
 
     public TicketView(TicketController controller) {

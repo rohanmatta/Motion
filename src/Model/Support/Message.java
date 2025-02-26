@@ -28,4 +28,12 @@ public class Message {
     public void setFile(File file) {
         this.file = file;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "text='" + text + '\'' +
+                ", file=" + file +
+                '}';
+    }
 }

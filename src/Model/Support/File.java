@@ -24,4 +24,12 @@ public class File {
     public void setContents(java.io.File contents) {
         this.contents = contents;
     }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "fileName='" + fileName + '\'' +
+                ", contents=" + contents +
+                '}';
+    }
 }
