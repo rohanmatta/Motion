@@ -1,7 +1,6 @@
 package View.ShareProgress;
 
 import Model.Login.User;
-import Model.ShareProgress.Workout;
 import Model.ShareProgress.SocialMediaAccount;
 import Model.ShareProgress.Post;
 
@@ -11,13 +10,6 @@ public class ShareProgressView {
         System.out.println("=== User Progress ===");
         System.out.println("Name: " + user.getUserName());
         System.out.println("Email: " + user.getUserEmail());
-        if (user.getWorkoutData() != null && !user.getWorkoutData().isEmpty()) {
-            for (Workout workout : user.getWorkoutData()) {
-                System.out.println(workout.toString());
-            }
-        } else {
-            System.out.println("No workout data available.");
-        }
         System.out.println("=====================");
     }
 
