@@ -1,7 +1,5 @@
 package Model.Login;
 
-import Model.ShareProgress.Workout;
-
 import java.util.List;
 
 public class User {
@@ -9,14 +7,6 @@ public class User {
     private String userID;
     private String userName;
     private String userEmail;
-    private List<Workout> workoutData;
-
-    public User(String userID, String userName, String userEmail, List<Workout> workoutData) {
-        this.userID = userID;
-        this.userName = userName;
-        this.userEmail = userEmail;
-        this.workoutData = workoutData;
-    }
 
     public String getUserID() {
         return userID;
@@ -42,21 +32,12 @@ public class User {
         this.userEmail = userEmail;
     }
 
-    public List<Workout> getWorkoutData() {
-        return workoutData;
-    }
-
-    public void setWorkoutData(List<Workout> workoutData) {
-        this.workoutData = workoutData;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "userID='" + userID + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
-                ", workoutData=" + workoutData +
                 '}';
     }
 }
