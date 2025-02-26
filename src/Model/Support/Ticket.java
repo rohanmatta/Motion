@@ -8,11 +8,11 @@ import java.util.List;
 public class Ticket {
     private List<Message> messages;
     private User user;
-    private SupportUser supportUser;
+    private List<SupportUser> supportUsers = new ArrayList<>();
 
     public Ticket(User user, SupportUser supportUser) {
         this.user = user;
-        this.supportUser = supportUser;
+        this.supportUsers.add(supportUser);
         this.messages = new ArrayList<>();
     }
 
@@ -33,11 +33,11 @@ public class Ticket {
         this.user = user;
     }
 
-    public SupportUser getSupportUser() {
-        return supportUser;
+    public List<SupportUser> getSupportUsers() {
+        return supportUsers;
     }
 
-    public void setSupportUser(SupportUser supportUser) {
-        this.supportUser = supportUser;
+    public void addSupportUser(SupportUser supportUser) {
+        this.supportUsers.add(supportUser);
     }
 }

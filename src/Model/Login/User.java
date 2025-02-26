@@ -2,20 +2,36 @@ package Model.Login;
 
 import Model.ShareProgress.Workout;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class User {
 
     private String userID;
     private String userName;
     private String userEmail;
+    private String userPassword;
+    private Set<Role> roles;
     private List<Workout> workoutData;
 
-    public User(String userID, String userName, String userEmail, List<Workout> workoutData) {
+    public User(String userID, String userName, String userEmail, String userPassword, List<Workout> workoutData) {
         this.userID = userID;
         this.userName = userName;
         this.userEmail = userEmail;
+        this.userPassword = userPassword;
         this.workoutData = workoutData;
+        this.roles = new HashSet<>(List.of(Role.USER));
+    }
+
+    public User(String userID, String userName, String userEmail, String userPassword, Set<Role> roles) {
+        this.userID = userID;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.roles = roles;
+        this.workoutData = new ArrayList<>();
     }
 
     public String getUserID() {
@@ -49,6 +65,26 @@ public class User {
     public void setWorkoutData(List<Workout> workoutData) {
         this.workoutData = workoutData;
     }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role role) { this.roles.add(role); }
+
+    public boolean hasAccess(Role permission) { return this.roles.contains(permission); }
 
     @Override
     public String toString() {
