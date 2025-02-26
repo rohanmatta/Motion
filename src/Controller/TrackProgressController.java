@@ -9,14 +9,14 @@ import java.util.List;
 
 /**
  * Controller for tracking user fitness progress.
- * Handles workout session storage, retrieval, and progress analysis.
+ * Handles workout session storage, retrieval, and progress analysis
  */
 public class TrackProgressController {
 
     private List<WorkoutSession> workoutSessions; // Stores user's workout history
 
     /**
-     * Constructor to initialize the controller.
+     * Constructor (initializes the controller).
      */
     public TrackProgressController() {
         this.workoutSessions = new ArrayList<>();
@@ -31,7 +31,7 @@ public class TrackProgressController {
                 return workoutSessions.get(i).getProgressData();
             }
         }
-        return null; // No progress found
+        return null; // If no progress is found
     }
 
     /**

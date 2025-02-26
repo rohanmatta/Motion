@@ -2,22 +2,13 @@ package Model.TrackProgress;
 
 import java.time.LocalDateTime;
 
-/**
- * Links a specific workout from the user to its progress tracking.
- */
 public class WorkoutSession {
     private int userId;
     private String workoutName; // Name of the workout performed
     private LocalDateTime sessionDate; // Date and time of the workout
     private ProgressData progressData; // Tracks workout performance
 
-    /**
-     * Constructor to initialize a workout session.
-     * @param userId The ID of the user who performed the workout.
-     * @param workoutName The name of the workout.
-     * @param sessionDate The date and time of the workout.
-     * @param progressData The tracked performance data.
-     */
+
     public WorkoutSession(int userId, String workoutName, LocalDateTime sessionDate, ProgressData progressData) {
         this.userId = userId;
         this.workoutName = workoutName;
@@ -25,7 +16,6 @@ public class WorkoutSession {
         this.progressData = progressData;
     }
 
-    // Getters and Setters
     public int getUserId() {
         return userId;
     }
@@ -56,17 +46,16 @@ public class WorkoutSession {
 
     /**
      * Logs a new workout session.
-     * (Implementation will store session details in a database or file)
      */
     public void logWorkoutSession() {
-        // TODO: Implement logic for saving workout session data
+        // Logic for saving workout session data
     }
 
     /**
      * Reviews workout performance based on stored progress data.
      */
     public void reviewWorkoutPerformance() {
-        // TODO: Implement logic to analyze workout session data
+        // Logic to analyze workout session data
     }
 
     @Override

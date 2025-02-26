@@ -10,10 +10,10 @@ public class ProgressData {
     private int userId;
     private int sets;
     private int reps;
-    private double duration; // Workout duration in minutes
+    private double duration; // Workout duration (time in minutes)
     private double caloriesBurned; // Calories burned during workout
-    private double weightLifted; // Optional: Track weights used (for strength workouts)
-    private String notes; // Optional: User notes about their progress
+    private double weightLifted;
+    private String notes; // User notes about their progress
 
     public ProgressData(int userId, int sets, int reps, double duration, double caloriesBurned, double weightLifted, String notes) {
         this.userId = userId;
@@ -25,7 +25,6 @@ public class ProgressData {
         this.notes = notes;
     }
 
-    // Getters and Setters (Left as requested)
     public int getUserId() {
         return userId;
     }

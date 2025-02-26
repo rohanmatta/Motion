@@ -51,6 +51,7 @@ public class LogWorkoutView {
         String notes = scanner.nextLine();
 
         // Create ProgressData and WorkoutSession objects
+        //Data for time need to look into more
         ProgressData progressData = new ProgressData(1, sets, reps, duration, caloriesBurned, weightLifted, notes);
         WorkoutSession workoutSession = new WorkoutSession(1, workoutName, LocalDateTime.now(), progressData);
 
