@@ -6,7 +6,7 @@ public class WorkoutSession {
     private int userId;
     private String workoutName; // Name of the workout performed
     private LocalDateTime sessionDate; // Date and time of the workout
-    private ProgressData progressData; // Tracks workout performance
+    private ProgressData progressData; // Tracks workout performance/progress
 
 
     public WorkoutSession(int userId, String workoutName, LocalDateTime sessionDate, ProgressData progressData) {
