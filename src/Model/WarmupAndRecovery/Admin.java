@@ -1,15 +1,13 @@
 package Model.WarmupAndRecovery;
 
-public class Admin {
-    private String adminId;
-    private String name;
+import Model.Login.Role;
+import Model.Login.User;
 
-    public Admin(String adminId, String name) {
-        this.adminId = adminId;
-        this.name = name;
+import java.util.HashSet;
+import java.util.List;
+
+public class Admin extends User {
+    public Admin(String userID, String userName, String userEmail, String userPassword) {
+        super(userID, userName, userEmail, userPassword, new HashSet<>(List.of(Role.USER, Role.ADMIN)));
     }
-
-    public String getAdminId() { return adminId; }
-    public String getName() { return name; }
-
 }
