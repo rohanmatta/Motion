@@ -1,4 +1,4 @@
-package View.ShareProgress;
+package View.Login;
 
 public class LoginView {
 

@@ -1,6 +1,6 @@
 package Controller;
 
-import View.ShareProgress.LoginView;
+import View.Login.LoginView;
 
 public class LoginController {
 
