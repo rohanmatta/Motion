@@ -45,7 +45,7 @@ public class LogWorkoutView {
 
         System.out.print("Enter Weight Lifted (or 0 if not applicable): ");
         double weightLifted = scanner.nextDouble();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         System.out.print("Enter any Notes about this workout: ");
         String notes = scanner.nextLine();

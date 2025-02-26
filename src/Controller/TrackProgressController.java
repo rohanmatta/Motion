@@ -70,6 +70,8 @@ public class TrackProgressController {
         double totalReps = 0, totalSets = 0, totalDuration = 0, totalCalories = 0;
         int sessionCount = userSessions.size();
 
+
+        //Calculating averages (using data from later)
         for (WorkoutSession session : userSessions) {
             totalReps += session.getProgressData().getReps();
             totalSets += session.getProgressData().getSets();
@@ -82,6 +84,7 @@ public class TrackProgressController {
         double avgDuration = totalDuration / sessionCount;
         double avgCalories = totalCalories / sessionCount;
 
+        //Displaying Trends
         return "{Progress Trends}\n"
                 + "Total Workouts: " + sessionCount + "\n"
                 + "Avg Reps per Workout: " + avgReps + "\n"

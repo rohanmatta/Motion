@@ -4,10 +4,8 @@ package Model.TrackProgress;
  * Tracks user workout performance and progress.
  */
 
-//By day or what?
-
-    //More well defined attributes for date 
-
+//Need to add more relevant attributes
+    //Need to add more date specific data
 public class ProgressData {
     private int userId;
     private int sets;
@@ -27,7 +25,7 @@ public class ProgressData {
         this.notes = notes;
     }
 
-    // Getters and Setters
+    // Getters and Setters (Left as requested)
     public int getUserId() {
         return userId;
     }
@@ -80,10 +78,19 @@ public class ProgressData {
         this.notes = notes;
     }
 
-    //Update progress data
+    /**
+     * Updates the user's progress data based on new workout results.
+     */
+    public void updateProgressData(int newSets, int newReps, double newDuration, double newCalories, double newWeight) {
+        // Logic for updating progress data
+    }
 
-    //Analyize progress data
-
+    /**
+     * Analyzes progress trends over time.
+     */
+    public void analyzeProgress() {
+        // Logic for progress analysis
+    }
 
     @Override
     public String toString() {
