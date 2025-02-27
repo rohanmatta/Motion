@@ -7,6 +7,7 @@ import Model.Support.SupportUser;
 import Model.Support.Ticket;
 
 /**
+ * Main view for tickets
  * @author Ryan
  */
 public class TicketView {
@@ -47,5 +48,14 @@ public class TicketView {
      */
     public void closeTicket() {
         ticket = null;
+    }
+
+    /**
+     * Views active ticket
+     */
+    public void viewTicket() {
+        System.out.println("=====");
+        System.out.println(ticket);
+        System.out.println("=====");
     }
 }

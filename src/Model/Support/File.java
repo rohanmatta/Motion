@@ -1,6 +1,7 @@
 package Model.Support;
 
 /**
+ * File system for attaching to messages
  * @author Ryan
  */
 public class File {

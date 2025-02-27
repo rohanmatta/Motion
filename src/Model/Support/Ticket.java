@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Support ticket
  * @author Ryan
  */
 public class Ticket {

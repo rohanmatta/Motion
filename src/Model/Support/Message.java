@@ -1,11 +1,15 @@
 package Model.Support;
 
+import Model.Login.User;
+
 /**
+ * Support ticket messages
  * @author Ryan
  */
 public class Message {
     private String text;
     private File file;
+    private User user;
 
     /**
      * Message constructor with file

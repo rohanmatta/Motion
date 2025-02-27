@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Main controller for ticketing support system
  * @author Ryan
  */
 public class TicketController {

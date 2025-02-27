@@ -1,6 +1,7 @@
 package Model.Support;
 
 /**
+ * Support team user
  * @author Ryan
  */
 public class SupportUser {
