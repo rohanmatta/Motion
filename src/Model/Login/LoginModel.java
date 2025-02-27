@@ -1,5 +1,9 @@
 package Model.Login;
 
+/**
+ * Model class representing user authentication details.
+ * Stores login ID, role, and password for authentication purposes.
+ */
 public class LoginModel {
-    //Authentication store login id, role, password,
+    // TODO: Implement fields for login ID, role, and password.
 }
