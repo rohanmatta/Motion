@@ -1,4 +1,4 @@
-Rohan Matta, Brett Cunningham, Sydney Black, Ryan Zanoni
+ Rohan Matta, Brett Cunningham, Sydney Black, Ryan Zanoni
 
 ## M02-A01 Contributions:
 | Name                         | Contribution          |

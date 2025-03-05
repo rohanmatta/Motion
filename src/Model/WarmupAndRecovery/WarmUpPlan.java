@@ -1,5 +1,7 @@
 package Model.WarmupAndRecovery;
 
+import java.util.Objects;
+
 /**
  * Represents a warm-up plan for a client, containing the client ID and plan details.
  */
@@ -24,6 +26,8 @@ public class WarmUpPlan {
      * @return The unique identifier of the client.
      */
     public String getClientId() {
+        // Stub: returning the clientId
+        System.out.println("Getting client ID: " + clientId);
         return clientId;
     }
 
@@ -33,6 +37,8 @@ public class WarmUpPlan {
      * @param clientId The new unique identifier to be assigned to the client.
      */
     public void setClientId(String clientId) {
+        // Stub: setting the clientId
+        System.out.println("Setting client ID to: " + clientId);
         this.clientId = clientId;
     }
 
@@ -42,6 +48,8 @@ public class WarmUpPlan {
      * @return The details of the plan.
      */
     public String getPlanDetails() {
+        // Stub: returning the planDetails
+        System.out.println("Getting plan details: " + planDetails);
         return planDetails;
     }
 
@@ -51,6 +59,8 @@ public class WarmUpPlan {
      * @param planDetails The new details to be assigned to the warm-up plan.
      */
     public void setPlanDetails(String planDetails) {
+        // Stub: setting the planDetails
+        System.out.println("Setting plan details to: " + planDetails);
         this.planDetails = planDetails;
     }
 
@@ -58,6 +68,8 @@ public class WarmUpPlan {
      * Displays the details of the warm-up plan.
      */
     public void displayPlanDetails() {
+        // Stub: simulate displaying details
+        System.out.println("Displaying warm-up plan details.");
         System.out.println("Client ID: " + clientId);
         System.out.println("Plan Details: " + planDetails);
     }
@@ -68,6 +80,8 @@ public class WarmUpPlan {
      * @return {@code true} if the client ID or plan details are null or empty, otherwise {@code false}.
      */
     public boolean isEmpty() {
+        // Stub: checking if plan is empty
+        System.out.println("Checking if the plan is empty.");
         return clientId == null || clientId.isEmpty() || planDetails == null || planDetails.isEmpty();
     }
 
@@ -77,6 +91,8 @@ public class WarmUpPlan {
      * @param details The new details to be set for the warm-up plan.
      */
     public void updatePlanDetails(String details) {
+        // Stub: updating plan details
+        System.out.println("Updating plan details with: " + details);
         this.planDetails = String.format("Updated Plan: %s", details);
     }
 
@@ -87,6 +103,8 @@ public class WarmUpPlan {
      * @return {@code true} if both warm-up plans have the same client ID and details, otherwise {@code false}.
      */
     public boolean equals(WarmUpPlan other) {
+        // Stub: comparing plans for equality
+        System.out.println("Comparing plans for equality.");
         if (other == null) return false;
         return this.clientId.equals(other.clientId) && this.planDetails.equals(other.planDetails);
     }
@@ -98,9 +116,8 @@ public class WarmUpPlan {
      */
     @Override
     public String toString() {
-        return "WarmUpPlan{" +
-                "clientId='" + clientId + '\'' +
-                ", planDetails='" + planDetails + '\'' +
-                '}';
+        // Stub: returning string representation
+        System.out.println("Converting warm-up plan to string.");
+        return String.format("WarmUpPlan { clientId='%s', planDetails='%s' }", clientId, planDetails);
     }
 }

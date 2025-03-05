@@ -1,14 +1,14 @@
 package View.WarmupAndRecovery;
 
-/**
- * Represents the view for displaying warm-up options to users.
- */
 public class ViewWarmUpOptions {
 
     /**
-     * Displays the available warm-up options to the user.
+     * Simulates displaying warm-up options for the user.
      */
-    public void displayOptions() {
-        System.out.println("1. View Plans\n2. Select Plan");
+    public void showOptions() {
+        System.out.println("Displaying available warm-up options...");
+        System.out.println("1. Standard Warmup");
+        System.out.println("2. Advanced Warmup");
+        System.out.println("3. Recovery Warmup");
     }
 }

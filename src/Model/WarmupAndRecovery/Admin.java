@@ -20,75 +20,93 @@ public class Admin {
 
     /**
      * Retrieves the admin ID.
+     * This is a stub method.
      *
      * @return The unique identifier of the admin.
      */
     public String getAdminId() {
-        return adminId;
+        // Stub: return a test value
+        System.out.println("Returning admin ID for test.");
+        return "testAdminId";
     }
 
     /**
      * Sets the admin ID.
+     * This is a stub method.
      *
      * @param adminId The new unique identifier to be assigned to the admin.
      */
     public void setAdminId(String adminId) {
-        this.adminId = adminId;
+        // Stub: print the action of setting admin ID
+        System.out.println("Setting admin ID to: " + adminId);
     }
 
     /**
      * Retrieves the admin's name.
+     * This is a stub method.
      *
      * @return The name of the admin.
      */
     public String getName() {
-        return name;
+        // Stub: return a test name
+        System.out.println("Returning admin name for test.");
+        return "Test Admin";
     }
 
     /**
      * Sets the admin's name.
+     * This is a stub method.
      *
      * @param name The new name to be assigned to the admin.
      */
     public void setName(String name) {
-        this.name = name;
+        // Stub: print the action of setting admin name
+        System.out.println("Setting admin name to: " + name);
     }
 
     /**
      * Displays the admin's details.
+     * This is a stub method.
      */
     public void displayAdminDetails() {
-        System.out.println("Admin ID: " + adminId);
-        System.out.println("Name: " + name);
+        // Stub: print admin details
+        System.out.println("Displaying admin details: Admin ID: " + adminId + ", Name: " + name);
     }
 
     /**
      * Compares this admin to another admin instance for equality.
+     * This is a stub method.
      *
      * @param other The {@code Admin} object to compare with.
      * @return {@code true} if both admin instances have the same ID and name, otherwise {@code false}.
      */
     public boolean equals(Admin other) {
-        if (other == null) return false;
+        // Stub: compare using mock logic
+        System.out.println("Comparing admin instances.");
         return this.adminId.equals(other.adminId) && this.name.equals(other.name);
     }
 
     /**
      * Updates the admin's name.
+     * This is a stub method.
      *
      * @param newName The new name to be set for the admin.
      */
     public void updateName(String newName) {
+        // Stub: update and print new name
+        System.out.println("Updating admin name to: " + newName);
         this.name = newName;
     }
 
     /**
      * Returns a string representation of the admin object.
+     * This is a stub method.
      *
      * @return A formatted string containing admin details.
      */
     @Override
     public String toString() {
+        // Stub: return a test string representation
         return "Admin{" +
                 "adminId='" + adminId + '\'' +
                 ", name='" + name + '\'' +
