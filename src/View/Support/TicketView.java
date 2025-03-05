@@ -58,4 +58,11 @@ public class TicketView {
         System.out.println(ticket);
         System.out.println("=====");
     }
+
+    public void listTickets() {
+        System.out.println("Currently available tickets:");
+        for (Ticket ticket : controller.getTickets()) {
+            System.out.println(ticket);
+        }
+    }
 }
