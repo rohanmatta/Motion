@@ -61,40 +61,43 @@ public class TestHarness {
         // Simulate displaying the warm-up options for the user
         viewWarmUpOptions.showOptions();
 
-        //TRACKING PROGRESS FLOW
 
-        // Instantiate Controller & Views
+        //..............................
+        //TRACKING PROGRESS FLOW TESTING
+        //..............................
+
+        // Setting up the controller and views
         TrackProgressController trackProgressController = new TrackProgressController();
         LogWorkoutView logWorkoutView = new LogWorkoutView(trackProgressController);
         TrackProgressView trackProgressView = new TrackProgressView();
 
         // Test Logging a Workout
-        System.out.println("\n[TEST] Logging a Workout...");
+        System.out.println("\nLogging a Workout...");
         logWorkoutView.displayWorkoutLogForm();
 
         // Test Retrieving Progress Data
-        System.out.println("\n[TEST] Retrieving Progress Data...");
+        System.out.println("\nRetrieving Progress Data...");
         ProgressData progressData = trackProgressController.getProgress(1);
         if (progressData != null) {
-            System.out.println("[PASSED] Progress data retrieved.");
+            System.out.println("Progress data retrieved.");
         } else {
-            System.out.println("[FAILED] Progress data is null.");
+            System.out.println("Progress data is null.");
         }
 
         // Test Fetching Workout Sessions
-        System.out.println("\n[TEST] Fetching Workout Sessions...");
+        System.out.println("\nFetching Workout Sessions...");
         List<WorkoutSession> sessions = trackProgressController.getUserWorkoutSessions(1);
         if (!sessions.isEmpty()) {
-            System.out.println("[PASSED] Retrieved " + sessions.size() + " workout session(s).");
+            System.out.println("Retrieved " + sessions.size() + " workout session(s).");
         } else {
-            System.out.println("[FAILED] No workout sessions found.");
+            System.out.println("No workout sessions found.");
         }
 
         // Test Displaying Progress Trends
-        System.out.println("\n[TEST] Displaying Progress Trends...");
+        System.out.println("\nDisplaying Progress Trends...");
         trackProgressView.displayProgressTrends();
 
-        System.out.println("\n=== TEST HARNESS COMPLETED ===");
+        System.out.println("\nTEST HARNESS FINISHED!");
 
 
     }
