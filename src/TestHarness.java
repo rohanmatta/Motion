@@ -1,5 +1,8 @@
+import Controller.ShareProgressController;
 import Controller.WarmUpCreateController;
 import Controller.TrackProgressController;
+import Model.ShareProgress.Post;
+import Model.ShareProgress.SocialMediaAccount;
 import Model.WarmupAndRecovery.WarmUpPlan;
 import Model.TrackProgress.ProgressData;
 import Model.TrackProgress.WorkoutSession;
@@ -8,6 +11,8 @@ import View.WarmupAndRecovery.TrainerLogin;
 import View.WarmupAndRecovery.ViewWarmUpOptions;
 import View.TrackProgress.LogWorkoutView;
 import View.TrackProgress.TrackProgressView;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -98,6 +103,29 @@ public class TestHarness {
         trackProgressView.displayProgressTrends();
 
         System.out.println("\nTEST HARNESS FINISHED!");
+
+        //..............................
+        //TRACKING SHARE PROGRESS FLOW TESTING
+        //..............................
+
+        System.out.println("\nTRACKING SHARE PROGRESS FLOW TESTING...");
+
+        // Create instance of ShareProgressController
+        ShareProgressController shareProgressController = new ShareProgressController();
+
+        // Simulate creating social media account
+        SocialMediaAccount socialMediaAccount = new SocialMediaAccount("acc001", "Twitter", "fitnessTest", "Password123!");
+
+        // Create and publish a post about a workout
+        Post progressPost1 = new Post("post001", "Just finished a 5k run!", "Twitter", LocalDateTime.now(), "Feeling energized after my run!!");
+        socialMediaAccount.publishPost(progressPost1);
+
+        // Create and publish another post about a workout
+        Post progressPost2 = new Post("post002", "Just hit a new PR on squats!", "Twitter", LocalDateTime.now(), "Hard work pays off!");
+        socialMediaAccount.publishPost(progressPost2);
+
+        // Test ShareProgressView to display the social media posts
+        shareProgressController.getUserProgress().displaySocialMediaPosts(socialMediaAccount);
 
 
     }

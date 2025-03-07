@@ -56,4 +56,6 @@ public class Post {
     public String toString() {
         return getSummary();
     }
+
+
 }
