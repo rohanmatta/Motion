@@ -5,59 +5,45 @@ import Model.TrackProgress.ProgressData;
 import Model.TrackProgress.WorkoutSession;
 
 import java.time.LocalDateTime;
-import java.util.Scanner;
 
 /**
- * Provides UI for logging a new workout session.
+ * Provides UI for logging a new workout session (Stubbed).
  */
 public class LogWorkoutView {
     private TrackProgressController trackProgressController;
-    private Scanner scanner;
 
     /**
      * Constructor to initialize LogWorkoutView with a controller.
      */
     public LogWorkoutView(TrackProgressController trackProgressController) {
         this.trackProgressController = trackProgressController;
-        this.scanner = new Scanner(System.in);
+        System.out.println("LogWorkoutView: Initialized.");
     }
 
     /**
-     * Input form for logging a new workout (Not needed now but can use later)
+     * Stub method for displaying a workout log form (No actual user input).
      */
     public void displayWorkoutLogForm() {
-        System.out.println("{Log a New Workout}");
+        System.out.println("LogWorkoutView: Simulating workout logging...");
 
-        System.out.print("Enter Workout Name: ");
-        String workoutName = scanner.nextLine();
+        // Stub: Use predefined values instead of user input
+        String workoutName = "Bench Press";
+        int sets = 3;
+        int reps = 10;
+        double duration = 45.0;
+        double caloriesBurned = 350.0;
+        double weightLifted = 100.0;
+        String notes = "Felt strong today!";
 
-        System.out.print("Enter Sets: ");
-        int sets = scanner.nextInt();
-
-        System.out.print("Enter Reps: ");
-        int reps = scanner.nextInt();
-
-        System.out.print("Enter Workout Duration (minutes): ");
-        double duration = scanner.nextDouble();
-
-        System.out.print("Enter Calories Burned: ");
-        double caloriesBurned = scanner.nextDouble();
-
-        System.out.print("Enter Weight Lifted (or 0 if not applicable): ");
-        double weightLifted = scanner.nextDouble();
-        scanner.nextLine();
-
-        System.out.print("Enter any Notes about this workout: ");
-        String notes = scanner.nextLine();
-
-        // Create ProgressData and WorkoutSession objects
-        //Data for time need to look into more
+        // Stub: Create a dummy ProgressData and WorkoutSession
         ProgressData progressData = new ProgressData(1, sets, reps, duration, caloriesBurned, weightLifted, notes);
         WorkoutSession workoutSession = new WorkoutSession(1, workoutName, LocalDateTime.now(), progressData);
 
-        // Sends the data to the controller for processing
+        // Stub: Simulate sending data to the controller
+        System.out.println("LogWorkoutView: Sending workout data to controller...");
         trackProgressController.updateProgress(1, progressData);
 
-        System.out.println("Workout logged successfully!!!");
+        // Stub: Print success message
+        System.out.println("LogWorkoutView: Workout logged successfully (Stub).");
     }
 }

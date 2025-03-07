@@ -1,50 +1,56 @@
 package View.TrackProgress;
 
-import Controller.TrackProgressController;
 import Model.TrackProgress.WorkoutSession;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Displays past workout sessions and progress trends.
+ * Stub: Displays past workout sessions and progress trends.
  */
 public class TrackProgressView {
-    private TrackProgressController trackProgressController;
 
     /**
-     * Constructor to initialize TrackProgressView with a controller.
-     */
-    public TrackProgressView(TrackProgressController trackProgressController) {
-        this.trackProgressController = trackProgressController;
-    }
-
-    /**
-     * Displays the past workout sessions.
+     * Stub: Displays past workout sessions with dummy data.
      */
     public void displayPastWorkouts() {
-        List<WorkoutSession> workoutSessions = trackProgressController.getUserWorkoutSessions(1); // Fetch user's workout history
+        System.out.println("TrackProgressView: Fetching past workout sessions (Stub)...");
+
+        // Stub: Use predefined values instead of fetching real data
+        List<WorkoutSession> workoutSessions = new ArrayList<>();
+        workoutSessions.add(new WorkoutSession(1, "Bench Press", LocalDateTime.now(), null));
+        workoutSessions.add(new WorkoutSession(1, "Squats", LocalDateTime.now(), null));
 
         if (workoutSessions.isEmpty()) {
-            System.out.println("No workouts logged yet.");
+            System.out.println("TrackProgressView: No workouts logged yet (Stub).");
             return;
         }
 
-        System.out.println("{Your Workout History}");
+        System.out.println("{Your Workout History (Stub)}");
         for (WorkoutSession session : workoutSessions) {
             System.out.println("Workout: " + session.getWorkoutName());
             System.out.println("Date: " + session.getSessionDate());
-            System.out.println("Sets: " + session.getProgressData().getSets());
-            System.out.println("Reps: " + session.getProgressData().getReps());
-            System.out.println("Duration: " + session.getProgressData().getDuration() + " minutes");
-            System.out.println("Calories Burned: " + session.getProgressData().getCaloriesBurned());
+            System.out.println("Sets: 3 (Stub)");
+            System.out.println("Reps: 10 (Stub)");
+            System.out.println("Duration: 45 minutes (Stub)");
+            System.out.println("Calories Burned: 350 (Stub)");
         }
     }
 
     /**
-     * Displays the progress trends (over time).
+     * Stub: Displays progress trends with dummy values.
      */
     public void displayProgressTrends() {
-        String progressTrends = trackProgressController.getProgressTrends(1); // Fetches the  user's progress analysis using controller
-        System.out.println("{Progress Trends}");
+        System.out.println("TrackProgressView: Fetching progress trends (Stub)...");
+
+        // Stub: Use predefined progress trends instead of fetching real data
+        String progressTrends = "{Progress Trends (Stub)}\n"
+                + "Total Workouts: 5\n"
+                + "Avg Reps per Workout: 12\n"
+                + "Avg Sets per Workout: 3\n"
+                + "Avg Duration: 35 min\n"
+                + "Avg Calories Burned: 280";
+
         System.out.println(progressTrends);
     }
 }
