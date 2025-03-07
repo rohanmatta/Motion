@@ -1,8 +1,15 @@
 import Controller.WarmUpCreateController;
+import Controller.TrackProgressController;
 import Model.WarmupAndRecovery.WarmUpPlan;
+import Model.TrackProgress.ProgressData;
+import Model.TrackProgress.WorkoutSession;
 import View.WarmupAndRecovery.ClientLogin;
 import View.WarmupAndRecovery.TrainerLogin;
 import View.WarmupAndRecovery.ViewWarmUpOptions;
+import View.TrackProgress.LogWorkoutView;
+import View.TrackProgress.TrackProgressView;
+import java.util.List;
+
 
 public class TestHarness {
 
@@ -53,5 +60,42 @@ public class TestHarness {
         ViewWarmUpOptions viewWarmUpOptions = new ViewWarmUpOptions();
         // Simulate displaying the warm-up options for the user
         viewWarmUpOptions.showOptions();
+
+        //TRACKING PROGRESS FLOW
+
+        // Instantiate Controller & Views
+        TrackProgressController trackProgressController = new TrackProgressController();
+        LogWorkoutView logWorkoutView = new LogWorkoutView(trackProgressController);
+        TrackProgressView trackProgressView = new TrackProgressView();
+
+        // Test Logging a Workout
+        System.out.println("\n[TEST] Logging a Workout...");
+        logWorkoutView.displayWorkoutLogForm();
+
+        // Test Retrieving Progress Data
+        System.out.println("\n[TEST] Retrieving Progress Data...");
+        ProgressData progressData = trackProgressController.getProgress(1);
+        if (progressData != null) {
+            System.out.println("[PASSED] Progress data retrieved.");
+        } else {
+            System.out.println("[FAILED] Progress data is null.");
+        }
+
+        // Test Fetching Workout Sessions
+        System.out.println("\n[TEST] Fetching Workout Sessions...");
+        List<WorkoutSession> sessions = trackProgressController.getUserWorkoutSessions(1);
+        if (!sessions.isEmpty()) {
+            System.out.println("[PASSED] Retrieved " + sessions.size() + " workout session(s).");
+        } else {
+            System.out.println("[FAILED] No workout sessions found.");
+        }
+
+        // Test Displaying Progress Trends
+        System.out.println("\n[TEST] Displaying Progress Trends...");
+        trackProgressView.displayProgressTrends();
+
+        System.out.println("\n=== TEST HARNESS COMPLETED ===");
+
+
     }
 }
