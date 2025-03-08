@@ -15,18 +15,22 @@ public class Message {
      * Message constructor with file
      * @param text message text
      * @param file message file
+     * @param user message user
      */
-    public Message(String text, File file) {
+    public Message(String text, File file, User user) {
         this.text = text;
         this.file = file;
+        this.user = user;
     }
 
     /**
      * Message constructor text only
      * @param text message text
+     * @param user message user
      */
-    public Message(String text) {
+    public Message(String text, User user) {
         this.text = text;
+        this.user = user;
     }
 
     /**
@@ -67,9 +71,26 @@ public class Message {
      */
     @Override
     public String toString() {
-        return "Message{" +
-                "text='" + text + '\'' +
-                ", file=" + file +
-                '}';
+        String ret = user.getUserName() + ": " + text;
+        if (file != null) {
+            ret += "\nAttached File: " + file.getFileName();
+        }
+        return ret;
+    }
+
+    /**
+     * Get message user
+     * @return User or null
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Set message user
+     * @param user User or Support User that sent the message
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 }

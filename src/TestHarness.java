@@ -1,11 +1,17 @@
 import Controller.ShareProgressController;
+import Controller.TicketController;
 import Controller.WarmUpCreateController;
 import Controller.TrackProgressController;
+import Model.Login.User;
 import Model.ShareProgress.Post;
 import Model.ShareProgress.SocialMediaAccount;
+import Model.Support.Message;
+import Model.Support.SupportUser;
+import Model.Support.Ticket;
 import Model.WarmupAndRecovery.WarmUpPlan;
 import Model.TrackProgress.ProgressData;
 import Model.TrackProgress.WorkoutSession;
+import View.Support.TicketView;
 import View.WarmupAndRecovery.ClientLogin;
 import View.WarmupAndRecovery.TrainerLogin;
 import View.WarmupAndRecovery.ViewWarmUpOptions;
@@ -127,6 +133,41 @@ public class TestHarness {
         // Test ShareProgressView to display the social media posts
         shareProgressController.getUserProgress().displaySocialMediaPosts(socialMediaAccount);
 
+        //..............................
+        //MESSAGE SUPPORT TICKET FLOW TESTING
+        //..............................
 
+        System.out.println("\nMESSAGE SUPPORT TICKET FLOW TESTING...");
+
+        // Set up initial state and users
+        TicketController controller = new TicketController();
+        User ticketUser = new User();
+        ticketUser.setUserName("TicketUser");
+        ticketUser.setUserID("test123");
+        SupportUser supportUser = new SupportUser("testSupport", "test");
+        TicketView ticketView = new TicketView(controller);
+
+        // Add new ticket
+        System.out.println("\nAdding new ticket");
+        ticketView.newTicket("Support request 1", ticketUser, supportUser);
+
+        // Verify ticket was added to list
+        System.out.println("\nList of tickets after adding new ticket");
+        ticketView.listTickets();
+
+        // Get the created ticket
+        Ticket ticket = ticketView.getTicket();
+        System.out.println("\nCreated ticket");
+        System.out.println(ticket);
+
+        // Add new message to the ticket
+        ticket.addMessage(new Message("Support request information", ticketUser));
+        System.out.println("\nTicket with added message");
+        System.out.println(ticket.getMessages());
+
+        // Add support user response
+        ticket.addMessage(new Message("Support team response", supportUser));
+        System.out.println("\nTicket with support message");
+        System.out.println(ticket.getMessages());
     }
 }

@@ -30,7 +30,7 @@ public class TicketView {
      */
     public void newTicket(String initialMessage, User user, SupportUser supportUser) {
         Ticket ticket1 = new Ticket(user, supportUser);
-        ticket1.addMessage(new Message(initialMessage));
+        ticket1.addMessage(new Message(initialMessage, user));
         controller.addTicket(ticket1);
         ticket = ticket1;
     }

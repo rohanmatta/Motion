@@ -1,11 +1,12 @@
 package Model.Support;
 
+import Model.Login.User;
+
 /**
  * Support team user
  * @author Ryan
  */
-public class SupportUser {
-    private String username;
+public class SupportUser extends User {
     private String password;
 
     /**
@@ -14,24 +15,8 @@ public class SupportUser {
      * @param password password
      */
     public SupportUser(String username, String password) {
-        this.username = username;
+        this.setUserName(username);
         this.password = password;
-    }
-
-    /**
-     * Get selected username
-     * @return username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Update username
-     * @param username new username
-     */
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     /**
@@ -57,8 +42,7 @@ public class SupportUser {
     @Override
     public String toString() {
         return "SupportUser{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                "username='" + this.getUserName() + '\'' +
                 '}';
     }
 }
