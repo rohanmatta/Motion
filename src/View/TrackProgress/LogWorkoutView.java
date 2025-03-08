@@ -21,12 +21,12 @@ public class LogWorkoutView {
     }
 
     /**
-     * Stub method for displaying a workout log form (No actual user input).
+     * Stub method for displaying a workout log form (doesn't require any use input).
      */
     public void displayWorkoutLogForm() {
         System.out.println("LogWorkoutView: Simulating workout logging...");
 
-        // Stub: Use predefined values instead of user input
+        // Stub that uses predefined values instead of user input
         String workoutName = "Bench Press";
         int sets = 3;
         int reps = 10;
@@ -35,15 +35,15 @@ public class LogWorkoutView {
         double weightLifted = 100.0;
         String notes = "Felt strong today!";
 
-        // Stub: Create a dummy ProgressData and WorkoutSession
+        // Stub that creates a dummy ProgressData and WorkoutSession
         ProgressData progressData = new ProgressData(1, sets, reps, duration, caloriesBurned, weightLifted, notes);
         WorkoutSession workoutSession = new WorkoutSession(1, workoutName, LocalDateTime.now(), progressData);
 
-        // Stub: Simulate sending data to the controller
+        // Stub that simulates sending data to the controller
         System.out.println("LogWorkoutView: Sending workout data to controller...");
         trackProgressController.updateProgress(1, progressData);
 
-        // Stub: Print success message
-        System.out.println("LogWorkoutView: Workout logged successfully (Stub).");
+        // Stub that print success messages
+        System.out.println("LogWorkoutView: Workout logged successfully (this is a stub).");
     }
 }

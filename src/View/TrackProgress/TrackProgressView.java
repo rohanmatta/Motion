@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Stub: Displays past workout sessions and progress trends.
+ * Stub that displays past workout sessions and progress trends.
  */
 public class TrackProgressView {
 
     /**
-     * Stub: Displays past workout sessions with dummy data.
+     * Stub that displays past workout sessions with dummy data.
      */
     public void displayPastWorkouts() {
         System.out.println("TrackProgressView: Fetching past workout sessions (Stub)...");
 
-        // Stub: Use predefined values instead of fetching real data
+        // Stub that uses predefined values instead of fetching real data
         List<WorkoutSession> workoutSessions = new ArrayList<>();
         workoutSessions.add(new WorkoutSession(1, "Bench Press", LocalDateTime.now(), null));
         workoutSessions.add(new WorkoutSession(1, "Squats", LocalDateTime.now(), null));
@@ -38,12 +38,12 @@ public class TrackProgressView {
     }
 
     /**
-     * Stub: Displays progress trends with dummy values.
+     * Stub that displays progress trends with dummy values.
      */
     public void displayProgressTrends() {
         System.out.println("TrackProgressView: Fetching progress trends (Stub)...");
 
-        // Stub: Use predefined progress trends instead of fetching real data
+        // Stubs that uses dummy progress trends
         String progressTrends = "{Progress Trends (Stub)}\n"
                 + "Total Workouts: 5\n"
                 + "Avg Reps per Workout: 12\n"
