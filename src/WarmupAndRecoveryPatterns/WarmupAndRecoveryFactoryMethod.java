@@ -1,4 +1,4 @@
-package WarmupAndRecoveryUI;
+package WarmupAndRecoveryPatterns;
 
 public class WarmupAndRecoveryFactoryMethod {
 }
