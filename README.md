@@ -27,3 +27,19 @@ password:
 
 login: 
 password:
+
+
+
+Sydney Black: 
+### Command Pattern:
+- The Command Pattern is used to encapsulate actions such as logging a workout and starting a warm-up.
+- Classes Implementing the Command Pattern:
+    - `LogWorkoutCommand`: Encapsulates the action of logging a workout in the ProgressTracker model.
+    - `StartWarmUpCommand`: Encapsulates the action of starting a warm-up using the WarmUpService model.
+- The commands are executed in the `WarmUpCreateController`, where they are triggered by user interactions with the view.
+
+### Factory Method Pattern:
+- The Factory Method Pattern is used to abstract the creation of different warm-up plans.
+- Classes Implementing the Factory Method Pattern:
+    - `WarmUpPlanFactory`: A factory responsible for creating specific warm-up plans, such as `CardioWarmUp`, `StrengthWarmUp`, or `FlexibilityWarmUp`.
+- Why it was used: The Factory Method pattern provides flexibility in adding new types of warm-up plans without modifying existing code, improving scalability.
