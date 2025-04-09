@@ -1,45 +1,45 @@
 package WarmupAndRecoveryPatterns;
 
-import WarmupAndRecoveryPatterns.*;
-
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class WarmupAndRecoveryCommandPattern extends JFrame {
+public class WarmupAndRecoveryCommandPattern {
+    public JPanel mainPanel;
     private JButton logWorkoutButton;
     private JButton startWarmUpButton;
-    private JPanel mainPanel;
 
     public WarmupAndRecoveryCommandPattern() {
+        // Initialize mainPanel if not initialized by a GUI designer
+        mainPanel = new JPanel();
+
+        // Add buttons to the panel
+        logWorkoutButton = new JButton("Log Workout");
+        startWarmUpButton = new JButton("Start WarmUp");
+        mainPanel.add(logWorkoutButton);
+        mainPanel.add(startWarmUpButton);
+
+        // Initialize the services and commands
         ProgressTracker tracker = new ProgressTracker();
         WarmUpService warmUpService = new WarmUpService();
 
         Command logWorkoutCommand = new LogWorkoutCommand(tracker);
         Command startWarmUpCommand = new StartWarmUpCommand(warmUpService);
 
-        logWorkoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                logWorkoutCommand.execute();
-            }
-        });
+        logWorkoutButton.addActionListener(e -> logWorkoutCommand.execute());
+        startWarmUpButton.addActionListener(e -> startWarmUpCommand.execute());
+    }
 
-        startWarmUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startWarmUpCommand.execute();
-            }
-        });
-
-        setContentPane(mainPanel);
-        setTitle("Command Pattern Demo");
-        setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+    // 👇 ADD THIS METHOD RIGHT HERE (empty if not manually creating components)
+    private void createUIComponents() {
+        // You can leave this empty unless you're creating custom components manually
     }
 
     public static void main(String[] args) {
-        new WarmupAndRecoveryCommandPattern();
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Command Pattern Demo");
+            frame.setContentPane(new WarmupAndRecoveryCommandPattern().mainPanel);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(300, 200);
+            frame.setVisible(true);
+        });
     }
 }
