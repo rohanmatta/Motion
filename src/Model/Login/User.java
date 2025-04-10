@@ -10,6 +10,8 @@ public class User {
     private String userID;
     private String userName;
     private String userEmail;
+    private String userPassword;
+    private int userRole = Role.USER.getValue();
 
     /**
      * Retrieves the user ID.
@@ -63,6 +65,30 @@ public class User {
      */
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public int getUserRole() {
+        return userRole;
+    }
+
+    public void addUserRole(Role role) {
+        this.userRole = this.userRole + role.getValue();
+    }
+
+    public void removeUserRole(Role role) {
+        this.userRole = this.userRole - role.getValue();
+    }
+
+    public boolean checkUserRole(Role role) {
+        return (this.userRole & role.getValue()) == role.getValue();
     }
 
     /**
