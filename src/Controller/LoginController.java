@@ -1,36 +1,36 @@
 package Controller;
 
-import View.Login.LoginView;
+import View.Login.LoginViewOld;
 
 /**
  * Controller class responsible for managing the login view.
  */
 public class LoginController {
 
-    private LoginView loginViewFrame;
+    private LoginViewOld loginViewFrame;
 
     /**
-     * Constructs a new {@code LoginController} with a default {@link LoginView} instance.
+     * Constructs a new {@code LoginController} with a default {@link LoginViewOld} instance.
      */
     public LoginController() {
-        this.loginViewFrame = new LoginView("", "");
+        this.loginViewFrame = new LoginViewOld("", "");
     }
 
     /**
-     * Retrieves the current {@link LoginView} instance.
+     * Retrieves the current {@link LoginViewOld} instance.
      *
      * @return The current login view frame.
      */
-    public LoginView getLoginFrame() {
+    public LoginViewOld getLoginFrame() {
         return loginViewFrame;
     }
 
     /**
-     * Sets the {@link LoginView} instance.
+     * Sets the {@link LoginViewOld} instance.
      *
      * @param loginViewFrame The new login view frame to be set.
      */
-    public void setLoginFrame(LoginView loginViewFrame) {
+    public void setLoginFrame(LoginViewOld loginViewFrame) {
         this.loginViewFrame = loginViewFrame;
     }
 }
