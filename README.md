@@ -47,7 +47,7 @@ Sydney Black:
 Brett Cunningham:
 ## Observer Pattern:
 Implementation:
-- The Observer Pattern is implemented to provide real-time updates for progress tracking. When progress data is updated, all registered observers are automatically notified.
+- The Observer Pattern is implemented to provide real-time updates for progress tracking. When progress data is updated, all of the observers are notified automatically.
 #### Classes/Interfaces Involved:
 - Observer (interface): Located in the Observer package; defines the update method.
 - Subject (interface): Located in the Observer package; defines methods to register, remove, and notify observers.
@@ -57,8 +57,8 @@ Implementation:
 - Ensures that UI elements reflecting fitness progress (e.g., workout trends and dashboards) remain current without requiring manual refreshes.
 ## Calendar UI:
 Implementation:
-- The Calendar UI pattern is used to provide an intuitive date-selection interface for logging workout sessions. This design pattern enhances usability by simulating a calendar view where users can pick specific dates.
+- The Calendar UI pattern is used to provide an intuitive date-selection interface for logging workout sessions. This design pattern enhances usability by providing a calendar view where users can pick specific dates.
 #### Classes/Interfaces Involved:
-- CalendarView (class): Located in the View (or View.TrackProgress if integrated) folder; displays a basic monthly calendar and allows the user to select a date.
+- CalendarView (class): Located in the View folder; displays a basic monthly calendar and allows the user to select a date.
 #### Purpose:
-- Provides a user-friendly method for users to select a date for logging workouts, thereby improving the overall user experience and efficiency when interacting with the fitness tracking application.
+- Provides a user-friendly method for users to select a date for logging workouts which improves the overall user experience and efficiency when interacting with the fitness tracking application.
