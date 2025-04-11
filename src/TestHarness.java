@@ -121,7 +121,13 @@ public class TestHarness {
         ShareProgressController shareProgressController = new ShareProgressController();
 
         // Simulate creating social media account
-        SocialMediaAccount socialMediaAccount = new SocialMediaAccount("acc001", "Twitter", "fitnessTest", "Password123!");
+        SocialMediaAccount socialMediaAccount = new SocialMediaAccount(
+                "acc001",
+                "Twitter",
+                "fitnessTest",
+                "Password123!",
+                new ArrayList<>(), // Empty list for posts
+                new ArrayList<>());
 
         // Create and publish a post about a workout
         Post progressPost1 = new Post("post001", "Just finished a 5k run!", "Twitter", LocalDateTime.now(), "Feeling energized after my run!!");
