@@ -1,5 +1,6 @@
 package Model.Support;
 
+import Controller.DbController;
 import Model.Login.User;
 
 import java.util.ArrayList;
@@ -10,30 +11,56 @@ import java.util.List;
  * @author Ryan
  */
 public class Ticket {
+    private long ticketId;
     private List<Message> messages;
     private User user;
-    private List<SupportUser> supportUsers;
+    private SupportUser supportUser;
 
     /**
-     * Ticket constructor with single support user
-     * @param user user requesting support
-     * @param supportUser support user
+     * Ticket constructor
      */
-    public Ticket(User user, SupportUser supportUser) {
-        this.user = user;
-        this.supportUsers = List.of(supportUser);
-        this.messages = new ArrayList<>();
+    private Ticket() {
     }
 
-    /**
-     * Ticket constructor with multiple support users
-     * @param user user requesting support
-     * @param supportUsers support users
-     */
-    public Ticket(User user, List<SupportUser> supportUsers) {
-        this.user = user;
-        this.supportUsers = supportUsers;
-        this.messages = new ArrayList<>();
+    public static class TicketBuilder {
+        private long ticketId;
+        private List<Message> messages = new ArrayList<>();
+        private User user;
+        private SupportUser supportUser;
+
+        public TicketBuilder setTicketId(long ticketId) {
+            this.ticketId = ticketId;
+            return this;
+        }
+
+        public TicketBuilder addMessage(Message message) {
+            this.messages.add(message);
+            return this;
+        }
+
+        public TicketBuilder setMessages(List<Message> messages) {
+            this.messages = new ArrayList<>(messages);
+            return this;
+        }
+
+        public TicketBuilder setUser(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public TicketBuilder setSupportUser(SupportUser supportUser) {
+            this.supportUser = supportUser;
+            return this;
+        }
+
+        public Ticket build() {
+            Ticket ticket = new Ticket();
+            ticket.messages = this.messages;
+            ticket.user = this.user;
+            ticket.supportUser = this.supportUser;
+            ticket.ticketId = this.ticketId;
+            return ticket;
+        }
     }
 
     /**
@@ -74,16 +101,24 @@ public class Ticket {
      * Get all support staff attached to ticket
      * @return list of support users
      */
-    public List<SupportUser> getSupportUsers() {
-        return supportUsers;
+    public SupportUser getSupportUser() {
+        return supportUser;
     }
 
     /**
      * Update list of support users
-     * @param supportUsers new list
+     * @param supportUser new list
      */
-    public void setSupportUsers(List<SupportUser> supportUsers) {
-        this.supportUsers = supportUsers;
+    public void setSupportUser(SupportUser supportUser) {
+        this.supportUser = supportUser;
+    }
+
+    public long getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(long ticketId) {
+        this.ticketId = ticketId;
     }
 
     /**
@@ -95,7 +130,8 @@ public class Ticket {
         return "Ticket{" +
                 "messages=" + messages +
                 ", user=" + user +
-                ", supportUsers=" + supportUsers +
+                ", supportUser=" + supportUser +
+                ", id=" + ticketId +
                 '}';
     }
 }

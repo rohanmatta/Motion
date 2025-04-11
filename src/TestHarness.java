@@ -140,10 +140,10 @@ public class TestHarness {
         System.out.println("\nMESSAGE SUPPORT TICKET FLOW TESTING...");
 
         // Set up initial state and users
-        TicketController controller = new TicketController();
         User ticketUser = new User();
         ticketUser.setUserName("TicketUser");
         ticketUser.setUserID("test123");
+        TicketController controller = new TicketController(ticketUser);
         SupportUser supportUser = new SupportUser();
         supportUser.setUserName("testSupport");
         supportUser.setUserPassword("test");

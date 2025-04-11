@@ -5,6 +5,10 @@ import Model.Support.Message;
 import Model.Support.SupportUser;
 import Model.Support.Ticket;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +27,44 @@ public class TicketController {
      * Initializes empty controller at the moment
      * Will be updated to sync with DB or File
      */
-    public TicketController() {
+    public TicketController(User activeUser) {
         this.tickets = new ArrayList<>();
         this.archive = new ArrayList<>();
+        Ticket.TicketBuilder builder = new Ticket.TicketBuilder();
+        try {
+            DbController dbController = new DbController();
+            Connection conn = dbController.getConn();
+            PreparedStatement stmt = conn.prepareStatement("select * from tickets left join rjz5227.users su on tickets.support_user = su.user_id left join rjz5227.users u on tickets.user = u.user_id");
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                SupportUser supportUser = new SupportUser();
+                supportUser.setUserID(String.valueOf(rs.getLong("su.user_id")));
+                supportUser.setUserName(rs.getString("su.user_name"));
+                User user = new User();
+                user.setUserID(rs.getString("u.user_id"));
+                user.setUserName(rs.getString("u.user_name"));
+                builder.setTicketId(rs.getLong("ticket_id")).setSupportUser(supportUser).setUser(user).setMessages(new ArrayList<>());
+                this.activeTicket = builder.build();
+                this.activeUser = activeUser;
+                this.tickets.add(activeTicket);
+                stmt = conn.prepareStatement("select * from messages left join rjz5227.users u on messages.user_id = u.user_id where ticket_id = ? order by sent_at desc");
+                stmt.setLong(1, activeTicket.getTicketId());
+                rs = stmt.executeQuery();
+                while (rs.next()) {
+                    user = new User();
+                    user.setUserID(rs.getString("u.user_id"));
+                    user.setUserName(rs.getString("u.user_name"));
+                    Message m = new Message(rs.getString("message_content"), user);
+                    m.setId(rs.getLong("message_id"));
+                    this.activeTicket.addMessage(m);
+                }
+            }
+            System.out.println(this.activeTicket);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /**
@@ -51,7 +90,7 @@ public class TicketController {
      * @return Created Ticket
      */
     public Ticket createTicket(User user, SupportUser supportUser) {
-        Ticket ticket = new Ticket(user, supportUser);
+        Ticket ticket = new Ticket.TicketBuilder().setSupportUser(supportUser).setUser(user).setMessages(new ArrayList<>()).build();
         addTicket(ticket);
         return ticket;
     }
@@ -108,5 +147,20 @@ public class TicketController {
 
     public void setActiveUser(User activeUser) {
         this.activeUser = activeUser;
+    }
+
+    public void addMessage(Message message) {
+        try {
+            DbController dbController = new DbController();
+            Connection conn = dbController.getConn();
+            CallableStatement stmt = conn.prepareCall("insert into messages (ticket_id, message_content, user_id) values(?,?,?)");
+            stmt.setLong(1, activeTicket.getTicketId());
+            stmt.setString(2, message.getText());
+            stmt.setLong(3, Long.parseLong(message.getUser().getUserID()));
+            stmt.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.activeTicket.addMessage(message);
     }
 }
