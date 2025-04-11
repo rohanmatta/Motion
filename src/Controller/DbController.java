@@ -1,12 +1,13 @@
 package Controller;
 
+import java.security.InvalidParameterException;
 import java.sql.*;
 
 public class DbController {
-    private final String dbName = "rjz5227";
-    private final String url = "jdbc:mysql://0.0.0.0:3306/"+dbName;
-    private final String username = "testuser";
-    private final String password = "testpass";
+    private final String dbName = "ist412_001_team1";
+    private final String url = "jdbc:mysql://mysql.up.ist.psu.edu:3306/"+dbName;
+    private final String username = "user";
+    private final String password = "pass";
     private Connection conn = null;
 
     public DbController() {
@@ -25,7 +26,7 @@ public class DbController {
             this.conn = conn;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new InvalidParameterException("DB Connection invalid");
         }
     }
 
