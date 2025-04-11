@@ -4,7 +4,7 @@ import Model.TrackProgress.ProgressData;
 import Model.TrackProgress.WorkoutSession;
 import Model.TrackProgress.ProgressSubject;
 import View.TrackProgress.TrackProgressView;
-import Observer.Subject;  // Import Subject from your Observer package
+import Observer.Subject;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

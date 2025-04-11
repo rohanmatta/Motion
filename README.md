@@ -53,12 +53,12 @@ Implementation:
 - Subject (interface): Located in the Observer package; defines methods to register, remove, and notify observers.
 - ProgressSubject (class): Located in the Model.TrackProgress package; manages ProgressData and notifies observers upon updates.
 - TrackProgressView (class): Located in the View.TrackProgress package; implements the Observer interface and updates the user interface in response to progress changes.
-- Purpose:
+Purpose:
 - Ensures that UI elements reflecting fitness progress (e.g., workout trends and dashboards) remain current without requiring manual refreshes.
 ## Calendar UI:
 Implementation:
 - The Calendar UI pattern is used to provide an intuitive date-selection interface for logging workout sessions. This design pattern enhances usability by simulating a calendar view where users can pick specific dates.
 - Classes/Interfaces Involved:
 - CalendarView (class): Located in the View (or View.TrackProgress if integrated) folder; displays a basic monthly calendar and allows the user to select a date.
-- Purpose:
+Purpose:
 - Provides a user-friendly method for users to select a date for logging workouts, thereby improving the overall user experience and efficiency when interacting with the fitness tracking application.

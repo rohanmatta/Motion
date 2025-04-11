@@ -2,7 +2,7 @@ package View.TrackProgress;
 
 import Model.TrackProgress.WorkoutSession;
 import Model.TrackProgress.ProgressData;
-import Observer.Observer;  // Import Observer from your Observer package
+import Observer.Observer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
