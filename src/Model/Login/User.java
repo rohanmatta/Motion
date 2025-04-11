@@ -88,7 +88,7 @@ public class User {
     }
 
     public boolean checkUserRole(Role role) {
-        return (this.userRole & role.getValue()) == role.getValue();
+        return (this.userRole & role.getValue()) == role.getValue() || (this.userRole & Role.ADMIN.getValue()) == role.getValue();
     }
 
     /**

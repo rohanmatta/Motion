@@ -144,7 +144,9 @@ public class TestHarness {
         User ticketUser = new User();
         ticketUser.setUserName("TicketUser");
         ticketUser.setUserID("test123");
-        SupportUser supportUser = new SupportUser("testSupport", "test");
+        SupportUser supportUser = new SupportUser();
+        supportUser.setUserName("testSupport");
+        supportUser.setUserPassword("test");
         TicketView ticketView = new TicketView(controller);
 
         // Add new ticket

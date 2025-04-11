@@ -1,6 +1,7 @@
 package View.Login;
 
 import Controller.LoginController;
+import Model.Login.User;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -39,7 +40,15 @@ public class LoginView extends JFrame {
 
     private void addActionListeners() {
         loginButton.addActionListener((e) -> {
-            System.out.println("Login Button pressed: U: " + username.getText() + ", P: " + new String(password.getPassword()));
+            String pw = new String(password.getPassword());
+            System.out.println("Login Button pressed: U: " + username.getText() + ", P: " + pw);
+            User user = new User();
+            user.setUserName(username.getText());
+            user.setUserPassword(pw);
+            controller.setUser(user);
+            if (controller.tryLogin()) {
+                JOptionPane.showMessageDialog(this, "Login Successful!");
+            }
         });
     }
 }

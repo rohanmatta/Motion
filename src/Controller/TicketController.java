@@ -15,6 +15,8 @@ import java.util.List;
 public class TicketController {
     private final List<Ticket> tickets;
     private final List<Ticket> archive;
+    private Ticket activeTicket;
+    private User activeUser;
 
     /**
      * Generic Ticket controller constructor
@@ -90,5 +92,21 @@ public class TicketController {
      */
     public List<Ticket> getArchive() {
         return archive;
+    }
+
+    public Ticket getActiveTicket() {
+        return activeTicket;
+    }
+
+    public void setActiveTicket(Ticket activeTicket) {
+        this.activeTicket = activeTicket;
+    }
+
+    public User getActiveUser() {
+        return activeUser;
+    }
+
+    public void setActiveUser(User activeUser) {
+        this.activeUser = activeUser;
     }
 }
