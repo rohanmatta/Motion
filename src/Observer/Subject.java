@@ -1,4 +1,4 @@
-package Model.TrackProgress;
+package Observer;
 
 public interface Subject {
     void registerObserver(Observer observer);

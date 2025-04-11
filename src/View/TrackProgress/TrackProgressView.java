@@ -1,14 +1,24 @@
 package View.TrackProgress;
 
 import Model.TrackProgress.WorkoutSession;
+import Model.TrackProgress.ProgressData;
+import Observer.Observer;  // Import Observer from your Observer package
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Stub that displays past workout sessions and progress trends.
+ * Now implements Observer to receive progress updates.
  */
-public class TrackProgressView {
+public class TrackProgressView implements Observer {
+
+    @Override
+    public void update(ProgressData progressData) {
+        // This method will be called when ProgressSubject notifies observers.
+        System.out.println("TrackProgressView updated: " + progressData.toString());
+        // Here you could add code to update UI components, if applicable.
+    }
 
     /**
      * Stub that displays past workout sessions with dummy data.

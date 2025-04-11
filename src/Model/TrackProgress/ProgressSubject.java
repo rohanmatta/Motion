@@ -2,7 +2,8 @@ package Model.TrackProgress;
 
 import java.util.ArrayList;
 import java.util.List;
-import Model.TrackProgress.ProgressData; // adjust package path as needed
+import Observer.Observer;
+import Observer.Subject;  // Add this import
 
 public class ProgressSubject implements Subject {
     private ProgressData progressData;
