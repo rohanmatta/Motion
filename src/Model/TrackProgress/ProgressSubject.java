@@ -3,7 +3,7 @@ package Model.TrackProgress;
 import java.util.ArrayList;
 import java.util.List;
 import Observer.Observer;
-import Observer.Subject;  // Add this import
+import Observer.Subject;
 
 public class ProgressSubject implements Subject {
     private ProgressData progressData;

@@ -45,15 +45,20 @@ Sydney Black:
 - Why it was used: The Factory Method pattern provides flexibility in adding new types of warm-up plans without modifying existing code, improving scalability.
 
 Brett Cunningham:
-### Observer Pattern:
-- The Command Pattern is used to encapsulate actions such as logging a workout and starting a warm-up.
-- Classes Implementing the Command Pattern:
-  - `LogWorkoutCommand`: Encapsulates the action of logging a workout in the ProgressTracker model.
-  - `StartWarmUpCommand`: Encapsulates the action of starting a warm-up using the WarmUpService model.
-- The commands are executed in the `WarmUpCreateController`, where they are triggered by user interactions with the view.
-
-### Calendar UI:
-- The Factory Method Pattern is used to abstract the creation of different warm-up plans.
-- Classes Implementing the Factory Method Pattern:
-  - `WarmUpPlanFactory`: A factory responsible for creating specific warm-up plans, such as `CardioWarmUp`, `StrengthWarmUp`, or `FlexibilityWarmUp`.
-- Why it was used: The Factory Method pattern provides flexibility in adding new types of warm-up plans without modifying existing code, improving scalability.
+## Observer Pattern:
+Implementation:
+- The Observer Pattern is implemented to provide real-time updates for progress tracking. When progress data is updated, all registered observers are automatically notified.
+- Classes/Interfaces Involved:
+- Observer (interface): Located in the Observer package; defines the update method.
+- Subject (interface): Located in the Observer package; defines methods to register, remove, and notify observers.
+- ProgressSubject (class): Located in the Model.TrackProgress package; manages ProgressData and notifies observers upon updates.
+- TrackProgressView (class): Located in the View.TrackProgress package; implements the Observer interface and updates the user interface in response to progress changes.
+- Purpose:
+- Ensures that UI elements reflecting fitness progress (e.g., workout trends and dashboards) remain current without requiring manual refreshes.
+## Calendar UI:
+Implementation:
+- The Calendar UI pattern is used to provide an intuitive date-selection interface for logging workout sessions. This design pattern enhances usability by simulating a calendar view where users can pick specific dates.
+- Classes/Interfaces Involved:
+- CalendarView (class): Located in the View (or View.TrackProgress if integrated) folder; displays a basic monthly calendar and allows the user to select a date.
+- Purpose:
+- Provides a user-friendly method for users to select a date for logging workouts, thereby improving the overall user experience and efficiency when interacting with the fitness tracking application.
