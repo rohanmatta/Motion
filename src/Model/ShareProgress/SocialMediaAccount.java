@@ -1,17 +1,20 @@
 package Model.ShareProgress;
 
+import Interface.PostComponent;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents a social media account where users can publish posts.
  */
-public class SocialMediaAccount {
+public class SocialMediaAccount implements PostComponent {
     private String accountId;
     private String platform;
     private String username;
     private String password;
     private List<Post> posts;
+    private List<PostComponent> components;
 
     /**
      * Constructs a new {@code SocialMediaAccount} instance.
@@ -21,12 +24,13 @@ public class SocialMediaAccount {
      * @param username  The username associated with the account.
      * @param password  The password for account authentication.
      */
-    public SocialMediaAccount(String accountId, String platform, String username, String password) {
+    public SocialMediaAccount(String accountId, String platform, String username, String password, List<Post> posts, List<PostComponent> components) {
         this.accountId = accountId;
         this.platform = platform;
         this.username = username;
         this.password = password;
-        this.posts = new ArrayList<>();
+        this.posts = posts;
+        this.components = components;
     }
 
     /**
@@ -74,4 +78,23 @@ public class SocialMediaAccount {
                 ", posts=" + posts +
                 '}';
     }
+
+    // Implemented composite design pattern
+
+    public void addComponent(PostComponent component) {
+        components.add(component);
+    }
+
+    public void removeComponent(PostComponent component) {
+        components.remove(component);
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Account: " + username + " on " + platform);
+        for (PostComponent component : components) {
+            component.display();
+        }
+    }
+
 }

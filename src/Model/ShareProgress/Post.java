@@ -1,11 +1,13 @@
 package Model.ShareProgress;
 
+import Interface.PostComponent;
+
 import java.time.LocalDateTime;
 
 /**
  * Represents a social media post that can be shared on different platforms.
  */
-public class Post {
+public class Post implements PostComponent {
     private String postId;
     private String content;
     private String platform;
@@ -55,6 +57,15 @@ public class Post {
     @Override
     public String toString() {
         return getSummary();
+    }
+
+
+
+    // Implemented design pattern (Composite Pattern)
+
+    @Override
+    public void display() {
+        System.out.println(getSummary());
     }
 
 

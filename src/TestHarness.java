@@ -19,6 +19,7 @@ import View.TrackProgress.LogWorkoutView;
 import View.TrackProgress.TrackProgressView;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -171,5 +172,34 @@ public class TestHarness {
         ticket.addMessage(new Message("Support team response", supportUser));
         System.out.println("\nTicket with support message");
         System.out.println(ticket.getMessages());
+
+        // ............................
+        // DISPLAYING COMPOSITE PATTERN
+        // ............................
+
+        // Create individual posts
+        Post post1 = new Post("post001", "Completed a 5k run!", "Twitter", LocalDateTime.now(), "Feeling great!");
+        Post post2 = new Post("post002", "Hit a new PR on squats!", "Instagram", LocalDateTime.now(), "Hard work pays off!");
+        Post post3 = new Post("post003", "Yoga session completed!", "Facebook", LocalDateTime.now(), "Relaxed and refreshed!");
+
+        // Create a social media account
+        SocialMediaAccount account1 = new SocialMediaAccount("acc001", "Twitter", "fitnessUser", "password123", new ArrayList<>(), new ArrayList<>());
+
+        // Add posts to the account
+        account1.addComponent(post1);
+        account1.addComponent(post2);
+
+        // Create another social media account
+        SocialMediaAccount account2 = new SocialMediaAccount("acc002", "Instagram", "workoutUser", "password456", new ArrayList<>(), new ArrayList<>());
+
+        // Add a post to the second account
+        account2.addComponent(post3);
+
+        // Nest the second account into the first account
+        account1.addComponent(account2);
+
+        // Display the composite structure
+        System.out.println("Displaying Composite Pattern:");
+        account1.display();
     }
 }
