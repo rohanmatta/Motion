@@ -29,7 +29,7 @@ public class TicketView {
      * @param supportUser Support user assigned to ticket
      */
     public void newTicket(String initialMessage, User user, SupportUser supportUser) {
-        Ticket ticket1 = new Ticket(user, supportUser);
+        Ticket ticket1 = new Ticket.TicketBuilder().setSupportUser(supportUser).setUser(user).build();
         ticket1.addMessage(new Message(initialMessage, user));
         controller.addTicket(ticket1);
         ticket = ticket1;

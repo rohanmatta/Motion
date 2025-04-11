@@ -10,6 +10,7 @@ public class Message {
     private String text;
     private File file;
     private User user;
+    private long id;
 
     /**
      * Message constructor with file
@@ -63,6 +64,14 @@ public class Message {
      */
     public void setFile(File file) {
         this.file = file;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     /**

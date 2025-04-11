@@ -1,57 +1,58 @@
 package View.Login;
 
-/**
- * Represents the view for user login, containing username and password.
- */
-public class LoginView {
+import Controller.LoginController;
+import Controller.TicketController;
+import Model.Login.User;
+import View.Support.SupportTicketView;
 
-    private String username;
-    private String password;
+import javax.swing.*;
+import java.util.Arrays;
 
-    /**
-     * Constructs a new {@code LoginView} instance with the specified username and password.
-     *
-     * @param username The username for the login view.
-     * @param password The password for the login view.
-     */
-    public LoginView(String username, String password) {
-        this.username = username;
-        this.password = password;
+public class LoginView extends JFrame {
+    private JTextField username;
+    private JPasswordField password;
+    private JButton loginButton;
+    private JPanel mainPanel;
+    private LoginController controller;
+
+    public JPasswordField getPassword() {
+        return password;
     }
 
-    /**
-     * Retrieves the username associated with this login view.
-     *
-     * @return The username for the login view.
-     */
-    public String getUsername() {
+    public JTextField getUsername() {
         return username;
     }
 
     /**
-     * Sets the username for this login view.
-     *
-     * @param username The new username to be assigned.
+     * @return login button
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public JButton getLoginButton() {
+        return loginButton;
     }
 
-    /**
-     * Retrieves the password associated with this login view.
-     *
-     * @return The password for the login view.
-     */
-    public String getPassword() {
-        return password;
+    public LoginView(LoginController loginController) {
+        this.controller = loginController;
+        this.add(mainPanel);
+        this.setTitle("Login");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(600, 400);
+        addActionListeners();
+        this.setVisible(true);
     }
 
-    /**
-     * Sets the password for this login view.
-     *
-     * @param password The new password to be assigned.
-     */
-    public void setPassword(String password) {
-        this.password = password;
+    private void addActionListeners() {
+        loginButton.addActionListener((e) -> {
+            String pw = new String(password.getPassword());
+            System.out.println("Login Button pressed: U: " + username.getText() + ", P: " + pw);
+            User user = new User();
+            user.setUserName(username.getText());
+            user.setUserPassword(pw);
+            controller.setUser(user);
+            if (controller.tryLogin()) {
+                JOptionPane.showMessageDialog(this, "Login Successful!");
+                this.dispose();
+                SupportTicketView newView = new SupportTicketView(new TicketController(this.controller.getUser()));
+            }
+        });
     }
 }
