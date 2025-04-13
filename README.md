@@ -83,3 +83,20 @@ Implementation:
 - Support User
 ### Purpose
 Simplifies communication with users
+
+## Rohan Matta
+## Composite Pattern
+Implementation:
+- This pattern is used to manage posts and social media accounts
+### Classes Involved
+- Post, SocialMediaAccount, PostComponent
+### Purpose
+- Simplifies the process of managing multiple posts and accounts by allowing them to be more flexible and scalable
+## Wizard Pattern
+Implementation:
+- This pattern is used to guide users through a series of steps to complete a task
+### Classes Involved
+- ShareProgressWizardPattern.java
+- ShareProgressWizardPattern.form
+### Purpose
+- Simplifies the process of sharing progress by breaking it down into smaller, manageable steps
