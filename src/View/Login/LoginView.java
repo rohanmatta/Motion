@@ -4,6 +4,7 @@ import Controller.LoginController;
 import Controller.TicketController;
 import Model.Login.User;
 import View.Support.SupportTicketView;
+import View.Support.TicketListView;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -50,8 +51,9 @@ public class LoginView extends JFrame {
             controller.setUser(user);
             if (controller.tryLogin()) {
                 JOptionPane.showMessageDialog(this, "Login Successful!");
+                System.out.println(this.controller.getUser().getUserRole());
                 this.dispose();
-                SupportTicketView newView = new SupportTicketView(new TicketController(this.controller.getUser()));
+                TicketListView newView = new TicketListView(new TicketController(this.controller.getUser()));
             }
         });
     }

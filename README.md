@@ -6,7 +6,7 @@ Rohan Matta, Brett Cunningham, Sydney Black, Ryan Zanoni
 | Brett Cunningham (Team Lead) | TrackProgress method stubs and content in testharness     |
 | Rohan Matta                  | ShareProgress method stubs and content in testharness     |
 | Sydney Black                 | WarmupAndRecovery method stubs and content in testharness |
-| Ryan Zanoni                  | Support/MessageTicket method stubs and content in testharness |
+| Ryan Zanoni                  | Support Ticket Use Case and design patterns               |
 
 NEED TO FILL THIS IN \/
 
@@ -22,11 +22,11 @@ Use Cases Scoped for Design and Implementation (Track Progress System - Athlete)
 9. The athlete adds or modifies notes on past workout sessions to track progress and make edits.
 
 Login details:
-login: 
-password: 
+login: admin
+password: password
 
-login: 
-password:
+login: test_user
+password: password
 
 
 
@@ -61,4 +61,25 @@ Implementation:
 #### Classes/Interfaces Involved:
 - CalendarView (class): Located in the View (or View.TrackProgress if integrated) folder; displays a basic monthly calendar and allows the user to select a date.
 #### Purpose:
-- Provides a user-friendly method for users to select a date for logging workouts, thereby improving the overall user experience and efficiency when interacting with the fitness tracking application.
+- Provides a user-friendly method for users to select a date for logging workouts which improves the overall user experience and efficiency when interacting with the fitness tracking application.
+
+## Ryan Zanoni
+## Builder Pattern
+Implementation:
+- The builder pattern allows us to quickly construct ticket values in a readable way
+### Classes Involved
+- Model.Support.Ticket
+### Purpose
+- Ensures ticket creation is seamless and easy for dev experience
+## Chat Pattern
+Implementation:
+- The Chat pattern allows us to effectively communicate with users
+### Classes Involved
+- SupportTicketView
+- TicketListView
+- TicketController
+- Ticket
+- User
+- Support User
+### Purpose
+Simplifies communication with users

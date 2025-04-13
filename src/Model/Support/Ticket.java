@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Ticket {
     private long ticketId;
+    private String subject;
     private List<Message> messages;
     private User user;
     private SupportUser supportUser;
@@ -25,11 +26,17 @@ public class Ticket {
     public static class TicketBuilder {
         private long ticketId;
         private List<Message> messages = new ArrayList<>();
+        private String subject;
         private User user;
         private SupportUser supportUser;
 
         public TicketBuilder setTicketId(long ticketId) {
             this.ticketId = ticketId;
+            return this;
+        }
+
+        public TicketBuilder setSubject(String subject) {
+            this.subject = subject;
             return this;
         }
 
@@ -121,6 +128,14 @@ public class Ticket {
         this.ticketId = ticketId;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     /**
      * String representation of ticket
      * @return string
@@ -128,10 +143,11 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-                "messages=" + messages +
+                "ticketId=" + ticketId +
+                ", subject='" + subject + '\'' +
+                ", messages=" + messages +
                 ", user=" + user +
                 ", supportUser=" + supportUser +
-                ", id=" + ticketId +
                 '}';
     }
 }
