@@ -11,7 +11,7 @@ public class User {
     private String userName;
     private String userEmail;
     private String userPassword;
-    private int userRole = Role.USER.getValue();
+    private long userRole = Role.USER.getValue();
 
     /**
      * Retrieves the user ID.
@@ -75,8 +75,12 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public int getUserRole() {
+    public long getUserRole() {
         return userRole;
+    }
+
+    public void setUserRole(long userRole) {
+        this.userRole = userRole;
     }
 
     public void addUserRole(Role role) {

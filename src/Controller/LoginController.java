@@ -64,6 +64,7 @@ public class LoginController {
                 System.out.println("User Found");
                 user.setUserEmail(rs.getString("email"));
                 user.setUserID(String.valueOf(rs.getLong("user_id")));
+                user.setUserRole(rs.getLong("roles"));
                 return true;
             }
             return false;

@@ -34,7 +34,7 @@ public class TicketController {
         try {
             DbController dbController = new DbController();
             Connection conn = dbController.getConn();
-            PreparedStatement stmt = conn.prepareStatement("select * from tickets left join rjz5227.users su on tickets.support_user = su.user_id left join rjz5227.users u on tickets.user = u.user_id");
+            PreparedStatement stmt = conn.prepareStatement("select * from tickets left join users su on tickets.support_user = su.user_id left join rjz5227.users u on tickets.user = u.user_id");
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 SupportUser supportUser = new SupportUser();
@@ -47,7 +47,7 @@ public class TicketController {
                 this.activeTicket = builder.build();
                 this.activeUser = activeUser;
                 this.tickets.add(activeTicket);
-                stmt = conn.prepareStatement("select * from messages left join rjz5227.users u on messages.user_id = u.user_id where ticket_id = ? order by sent_at desc");
+                stmt = conn.prepareStatement("select * from messages left join users u on messages.user_id = u.user_id where ticket_id = ? order by sent_at");
                 stmt.setLong(1, activeTicket.getTicketId());
                 rs = stmt.executeQuery();
                 while (rs.next()) {
@@ -63,8 +63,6 @@ public class TicketController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     /**
