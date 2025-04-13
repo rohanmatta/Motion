@@ -1,5 +1,6 @@
 package Controller;
 
+import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
 import View.ShareProgress.ShareProgressView;
 
 /**
@@ -9,14 +10,23 @@ public class ShareProgressController {
 
     private LoginController userLogin;
     private ShareProgressView userProgress;
+    private ShareProgressWizardPattern wizard;
 
     /**
      * Constructs a new {@code ShareProgressController} with default instances
-     * of {@link LoginController} and {@link ShareProgressView}.
+     * of {@link LoginController}, {@link ShareProgressView}, and initializes the wizard.
      */
     public ShareProgressController() {
         this.userLogin = new LoginController();
         this.userProgress = new ShareProgressView();
+        this.wizard = new ShareProgressWizardPattern();
+    }
+
+    /**
+     * Displays the ShareProgressWizardPattern.
+     */
+    public void showWizard() {
+        wizard.setVisible(true);
     }
 
     /**

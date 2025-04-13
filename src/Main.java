@@ -1,6 +1,5 @@
-import Controller.DbController;
-import Controller.LoginController;
-import ShareProgressUI.ShareProgressWizardPattern;
+import Controller.ShareProgressController;
+import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
 
 import javax.swing.*;
 
@@ -9,21 +8,14 @@ public class Main {
         System.out.println("Hello, World!");
         // Init login controller
 
-        new LoginController();
+        // new LoginController();
         //test
 
-        // Create a JFrame to host the ShareProgressWizardPattern
-        JFrame frame = new JFrame("Share Progress Wizard");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
+        // Initialize the ShareProgressController
+        // ShareProgressController controller = new ShareProgressController();
 
-        // Create an instance of ShareProgressWizardPattern
-        ShareProgressWizardPattern wizard = new ShareProgressWizardPattern();
+        // Show the ShareProgressWizardPattern
+        // controller.showWizard();
 
-        // Add the wizard's panel to the frame
-        frame.setContentPane(wizard.getOuterPanel());
-
-        // Make the frame visible
-        frame.setVisible(true);
     }
 }
