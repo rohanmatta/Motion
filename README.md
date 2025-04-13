@@ -6,7 +6,7 @@ Rohan Matta, Brett Cunningham, Sydney Black, Ryan Zanoni
 | Brett Cunningham (Team Lead) | TrackProgress method stubs and content in testharness     |
 | Rohan Matta                  | ShareProgress method stubs and content in testharness     |
 | Sydney Black                 | WarmupAndRecovery method stubs and content in testharness |
-| Ryan Zanoni                  | Support/MessageTicket method stubs and content in testharness |
+| Ryan Zanoni                  | Support Ticket Use Case and design patterns               |
 
 NEED TO FILL THIS IN \/
 
