@@ -7,10 +7,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-/**
- * CalendarView provides a simple stub implementation of a calendar-based UI.
- * This class creates a GUI that displays the current month/year and allows the user to select a date.
- */
+
 public class CalendarView extends JFrame {
     private JLabel calendarLabel;
     private JTextField dateInputField;
@@ -18,7 +15,7 @@ public class CalendarView extends JFrame {
     private JLabel selectedDateLabel;
 
     /**
-     * Constructor - sets up the GUI components.
+     * Constructor that sets up the GUI components.
      */
     public CalendarView() {
         setTitle("Calendar View");
@@ -28,17 +25,17 @@ public class CalendarView extends JFrame {
         // Create main panel with BorderLayout
         JPanel panel = new JPanel(new BorderLayout());
 
-        // Header: Display current month and year
+        // Header
         LocalDate currentDate = LocalDate.now();
         calendarLabel = new JLabel("Calendar for " + currentDate.getMonth() + " " + currentDate.getYear(), SwingConstants.CENTER);
         panel.add(calendarLabel, BorderLayout.NORTH);
 
-        // Center panel: Display day names (stub for calendar grid)
+        // Center panel
         JPanel centerPanel = new JPanel(new FlowLayout());
         centerPanel.add(new JLabel("Mon  Tue  Wed  Thu  Fri  Sat  Sun"));
         panel.add(centerPanel, BorderLayout.CENTER);
 
-        // Bottom panel: Input for date selection
+        // Bottom panel
         JPanel bottomPanel = new JPanel(new FlowLayout());
         dateInputField = new JTextField(10);
         selectButton = new JButton("Select Date");
@@ -51,9 +48,9 @@ public class CalendarView extends JFrame {
         panel.add(bottomPanel, BorderLayout.SOUTH);
 
         add(panel);
-        pack(); // Adjust frame size based on content
+        pack();
 
-        // Set up the action listener for the Select Date button.
+
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,10 +60,7 @@ public class CalendarView extends JFrame {
         });
     }
 
-    /**
-     * Action performed when the user clicks the "Select Date" button.
-     * It parses the entered date and displays it on the GUI.
-     */
+
     private void selectDateAction() {
         String input = dateInputField.getText();
         System.out.println("Date input received: " + input); // Debug statement
@@ -81,9 +75,6 @@ public class CalendarView extends JFrame {
         }
     }
 
-    /**
-     * Main method to run the CalendarView GUI.
-     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

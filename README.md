@@ -61,7 +61,7 @@ Implementation:
 #### Classes/Interfaces Involved:
 - CalendarView (class): Located in the View (or View.TrackProgress if integrated) folder; displays a basic monthly calendar and allows the user to select a date.
 #### Purpose:
-- Provides a user-friendly method for users to select a date for logging workouts, thereby improving the overall user experience and efficiency when interacting with the fitness tracking application.
+- Provides a user-friendly method for users to select a date for logging workouts which improves the overall user experience and efficiency when interacting with the fitness tracking application.
 
 ## Ryan Zanoni
 ## Builder Pattern
