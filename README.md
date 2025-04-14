@@ -1,12 +1,12 @@
 Rohan Matta, Brett Cunningham, Sydney Black, Ryan Zanoni
 
-## M02-A03 Contributions:
-| Name                         | Contribution                                              |
-|------------------------------|-----------------------------------------------------------|
-| Brett Cunningham (Team Lead) | TrackProgress method stubs and content in testharness     |
-| Rohan Matta                  | ShareProgress method stubs and content in testharness     |
-| Sydney Black                 | WarmupAndRecovery method stubs and content in testharness |
-| Ryan Zanoni                  | Support Ticket Use Case and design patterns               |
+## M03-A04 Contributions:
+| Name                         | Contribution                                                   |
+|------------------------------|----------------------------------------------------------------|
+| Brett Cunningham (Team Lead) | Worked on initial usecase                                      |
+| Rohan Matta                  | Worked on initial usecase                                      |
+| Sydney Black                 | Worked on initial usecase                                      |
+| Ryan Zanoni                  | Worked on initial usecase, set up database and log in function |
 
 NEED TO FILL THIS IN \/
 
