@@ -8,8 +8,6 @@ Rohan Matta, Brett Cunningham, Sydney Black, Ryan Zanoni
 | Sydney Black                 | Worked on initial usecase                                      |
 | Ryan Zanoni                  | Worked on initial usecase, set up database and log in function |
 
-NEED TO FILL THIS IN \/
-
 Use Cases Scoped for Design and Implementation (Track Progress System - Athlete)
 1. The athlete logs into the system to access their workout history and to have progress tracking features.
 2. Athlete Views Workout History
