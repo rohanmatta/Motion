@@ -30,7 +30,7 @@ password: password
 
 
 
-Sydney Black: 
+# Sydney Black: 
 ### Command Pattern:
 - The Command Pattern is used to encapsulate actions such as logging a workout and starting a warm-up.
 - Classes Implementing the Command Pattern:
@@ -44,8 +44,8 @@ Sydney Black:
     - `WarmUpPlanFactory`: A factory responsible for creating specific warm-up plans, such as `CardioWarmUp`, `StrengthWarmUp`, or `FlexibilityWarmUp`.
 - Why it was used: The Factory Method pattern provides flexibility in adding new types of warm-up plans without modifying existing code, improving scalability.
 
-Brett Cunningham:
-## Observer Pattern:
+# Brett Cunningham:
+### Observer Pattern:
 Implementation:
 - The Observer Pattern is implemented to provide real-time updates for progress tracking. When progress data is updated, all registered observers are automatically notified.
 #### Classes/Interfaces Involved:
@@ -55,7 +55,7 @@ Implementation:
 - TrackProgressView (class): Located in the View.TrackProgress package; implements the Observer interface and updates the user interface in response to progress changes.
 #### Purpose:
 - Ensures that UI elements reflecting fitness progress (e.g., workout trends and dashboards) remain current without requiring manual refreshes.
-## Calendar UI:
+### Calendar UI:
 Implementation:
 - The Calendar UI pattern is used to provide an intuitive date-selection interface for logging workout sessions. This design pattern enhances usability by simulating a calendar view where users can pick specific dates.
 #### Classes/Interfaces Involved:
@@ -84,7 +84,7 @@ Implementation:
 ### Purpose
 Simplifies communication with users
 
-## Rohan Matta
+# Rohan Matta
 ## Composite Pattern
 Implementation:
 - This pattern is used to manage posts and social media accounts

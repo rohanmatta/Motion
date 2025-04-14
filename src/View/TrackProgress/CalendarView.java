@@ -20,9 +20,9 @@ public class CalendarView extends JFrame {
     public CalendarView() {
         setTitle("Calendar View");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null); // Center the frame
+        setLocationRelativeTo(null);
 
-        // Create main panel with BorderLayout
+
         JPanel panel = new JPanel(new BorderLayout());
 
         // Header
@@ -70,7 +70,7 @@ public class CalendarView extends JFrame {
             selectedDateLabel.setText("Selected Date: " + selected.toString());
             System.out.println("Selected Date updated to: " + selected.toString()); // Debug statement
         } catch (Exception ex) {
-            ex.printStackTrace(); // Print the exception to the console for debugging
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Invalid date format. Please enter date as YYYY-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
