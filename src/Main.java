@@ -1,3 +1,4 @@
+import Controller.LoginController;
 import Controller.ShareProgressController;
 import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
 
@@ -8,7 +9,7 @@ public class Main {
         System.out.println("Hello, World!");
         // Init login controller
 
-        // new LoginController();
+         new LoginController();
         //test
 
         // Initialize the ShareProgressController
