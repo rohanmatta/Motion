@@ -6,8 +6,8 @@ import java.sql.*;
 public class DbController {
     private final String dbName = "ist412_001_team1";
     private final String url = "jdbc:mysql://mysql.up.ist.psu.edu:3306/"+dbName;
-    private final String username = "user";
-    private final String password = "pass";
+    private final String username = "rjz5227";
+    private final String password = "EsTMYK62";
     private Connection conn = null;
 
     public DbController() {
