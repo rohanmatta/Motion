@@ -54,6 +54,8 @@ public class LoginView extends JFrame {
                 System.out.println(this.controller.getUser().getUserRole());
                 this.dispose();
                 TicketListView newView = new TicketListView(new TicketController(this.controller.getUser()));
+            } else {
+                JOptionPane.showMessageDialog(this, "Login Failed!");
             }
         });
     }
