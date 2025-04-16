@@ -34,7 +34,7 @@ public class TicketController {
         try {
             DbController dbController = new DbController();
             Connection conn = dbController.getConn();
-            PreparedStatement stmt = conn.prepareStatement("select * from tickets left join users su on tickets.support_user = su.user_id left join rjz5227.users u on tickets.user = u.user_id");
+            PreparedStatement stmt = conn.prepareStatement("select * from tickets left join users su on tickets.support_user = su.user_id left join users u on tickets.user = u.user_id");
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 SupportUser supportUser = new SupportUser();
