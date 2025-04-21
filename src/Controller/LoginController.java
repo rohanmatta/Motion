@@ -65,7 +65,11 @@ public class LoginController {
                 user.setUserEmail(rs.getString("email"));
                 user.setUserID(String.valueOf(rs.getLong("user_id")));
                 user.setUserRole(rs.getLong("roles"));
+                new View.MainMenuView(user);
+                loginViewFrame.dispose(); // Optional: close login window
                 return true;
+
+
             }
             return false;
         } catch (Exception e) {
