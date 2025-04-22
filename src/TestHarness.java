@@ -9,13 +9,10 @@ import Model.Support.Message;
 import Model.Support.SupportUser;
 import Model.Support.Ticket;
 import Model.WarmupAndRecovery.WarmUpPlan;
-import Model.TrackProgress.ProgressData;
-import Model.TrackProgress.WorkoutSession;
 import View.Support.TicketView;
 import View.WarmupAndRecovery.ClientLogin;
 import View.WarmupAndRecovery.TrainerLogin;
 import View.WarmupAndRecovery.ViewWarmUpOptions;
-import View.TrackProgress.LogWorkoutView;
 import View.TrackProgress.TrackProgressView;
 
 import java.time.LocalDateTime;
@@ -77,37 +74,6 @@ public class TestHarness {
         //..............................
         //TRACKING PROGRESS FLOW TESTING
         //..............................
-
-        // Setting up the controller and views
-        TrackProgressController trackProgressController = new TrackProgressController();
-        LogWorkoutView logWorkoutView = new LogWorkoutView(trackProgressController);
-        TrackProgressView trackProgressView = new TrackProgressView();
-
-        // Test Logging a Workout
-        System.out.println("\nLogging a Workout...");
-        logWorkoutView.displayWorkoutLogForm();
-
-        // Test Retrieving Progress Data
-        System.out.println("\nRetrieving Progress Data...");
-        ProgressData progressData = trackProgressController.getProgress(1);
-        if (progressData != null) {
-            System.out.println("Progress data retrieved.");
-        } else {
-            System.out.println("Progress data is null.");
-        }
-
-        // Test Fetching Workout Sessions
-        System.out.println("\nFetching Workout Sessions...");
-        List<WorkoutSession> sessions = trackProgressController.getUserWorkoutSessions(1);
-        if (!sessions.isEmpty()) {
-            System.out.println("Retrieved " + sessions.size() + " workout session(s).");
-        } else {
-            System.out.println("No workout sessions found.");
-        }
-
-        // Test Displaying Progress Trends
-        System.out.println("\nDisplaying Progress Trends...");
-        trackProgressView.displayProgressTrends();
 
         System.out.println("\nTEST HARNESS FINISHED!");
 

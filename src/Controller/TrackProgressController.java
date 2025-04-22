@@ -1,87 +1,105 @@
+// Controller/TrackProgressController.java
 package Controller;
 
-import Model.TrackProgress.ProgressData;
-import Model.TrackProgress.WorkoutSession;
-import Model.TrackProgress.ProgressSubject;
+import Model.Login.User;
+import Model.TrackProgress.WorkoutEntry;
 import View.TrackProgress.TrackProgressView;
-import Observer.Subject;
 
-import java.time.LocalDateTime;
+import javax.swing.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Controller for tracking user fitness progress.
- * Handles workout session storage, retrieval, progress analysis, and observer pattern integration.
- */
 public class TrackProgressController {
+    private final User user;
+    private final Connection conn;
+    private final TrackProgressView view;
+    private final List<WorkoutEntry> sessions = new ArrayList<>();
 
-    private List<WorkoutSession> workoutSessions; // Stores user's workout history
+    public TrackProgressController(User user) {
+        this.user = user;
+        this.conn = new DbController().getConn();
+        this.view = new TrackProgressView();
 
-    // Observer Pattern related members:
-    private ProgressSubject progressSubject;
-    private TrackProgressView progressView;
+        loadSessions();
+        view.updateTable(sessions);
 
-    /**
-     * Constructor (initializes the controller).
-     */
-    public TrackProgressController() {
-        this.workoutSessions = new ArrayList<>();
+        view.getAddButton().addActionListener(e -> onAdd());
+    }
 
-        // Initialize with dummy progress data.
-        ProgressData initialData = new ProgressData(1, 3, 10, 45.0, 300.0, 100.0, "Initial data");
-        progressSubject = new ProgressSubject(initialData);
+    private void loadSessions() {
+        sessions.clear();
+        String sql = """
+                SELECT id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight
+                  FROM workouts
+                 WHERE user_id = ?
+                 ORDER BY `Date` DESC
+                """;
 
-        // Create the view and register it as an observer to the progress subject.
-        progressView = new TrackProgressView();
-        progressSubject.registerObserver(progressView);
+        try (PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setLong(1, Long.parseLong(user.getUserID()));
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                WorkoutEntry w = new WorkoutEntry();
+                w.setId(rs.getLong("id"));
+                w.setUserId(Long.parseLong(user.getUserID()));
+                w.setWorkoutName(rs.getString("Workout_Name"));
+                w.setDate(rs.getDate("Date"));
+                w.setSets(rs.getInt("Sets"));
+                w.setReps(rs.getInt("Average_Reps"));
+                w.setWeight(rs.getInt("Average_Weight"));
+                sessions.add(w);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(view, "Error loading sessions");
+        }
+    }
 
-        System.out.println("TrackProgressController: Initialized and Observer pattern integrated.");
+    private void onAdd() {
+        String sql = """
+                INSERT INTO workouts
+                  (user_id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight)
+                VALUES (?,?,?,?,?,?)
+                """;
+        try (PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            st.setLong(1, Long.parseLong(user.getUserID()));
+            st.setString(2, view.getWorkoutName());
+            st.setDate(3, view.getDate());
+            st.setInt(4, view.getSets());
+            st.setInt(5, view.getReps());
+            st.setInt(6, view.getWeight());
+
+            if (st.executeUpdate() == 1) {
+                ResultSet keys = st.getGeneratedKeys();
+                WorkoutEntry w = new WorkoutEntry(
+                        Long.parseLong(user.getUserID()),
+                        view.getWorkoutName(),
+                        view.getDate(),
+                        view.getSets(),
+                        view.getReps(),
+                        view.getWeight()
+                );
+                if (keys.next()) {
+                    w.setId(keys.getLong(1));
+                }
+                sessions.add(0, w);
+                view.updateTable(sessions);
+                JOptionPane.showMessageDialog(view, "Workout added!");
+            } else {
+                JOptionPane.showMessageDialog(view, "Insert failed");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(view, "Invalid input or DB error");
+        }
     }
 
     /**
-     * Retrieves the current progress data for a user (latest session).
+     * Expose sessions list for other parts of the app if needed.
      */
-    public ProgressData getProgress(int userId) {
-        System.out.println("TrackProgressController: Retrieving progress for user ID " + userId);
-        return progressSubject.getProgressData();
+    public List<WorkoutEntry> getSessions() {
+        return sessions;
     }
 
-    /**
-     * Updates progress by logging/creating a new workout session.
-     * Notifies all observers of the updated progress.
-     */
-    public boolean updateProgress(int userId, ProgressData updatedProgress) {
-        System.out.println("TrackProgressController: Updating progress for user ID " + userId);
-        // Update the progress subject; this will notify the TrackProgressView observer.
-        progressSubject.setProgressData(updatedProgress);
-        // You can also add the new workout session to workoutSessions if desired.
-        return true;
-    }
-
-    /**
-     * Retrieves all workout sessions for a user.
-     */
-    public List<WorkoutSession> getUserWorkoutSessions(int userId) {
-        System.out.println("TrackProgressController: Fetching workout sessions for user ID " + userId);
-        // Stub for a dummy workout session.
-        List<WorkoutSession> dummySessions = new ArrayList<>();
-        dummySessions.add(new WorkoutSession(userId, "Sample Workout", LocalDateTime.now(),
-                new ProgressData(userId, 3, 10, 45.0, 300.0, 120.0, "Need to have better form for bench-press")));
-        return dummySessions;
-    }
-
-    /**
-     * Progress trend summary for a user.
-     */
-    public String getProgressTrends(int userId) {
-        System.out.println("TrackProgressController: Analyzing progress trends for user ID " + userId);
-        // Stub that returns a dummy progress summary.
-        return "{Progress Trends}\n"
-                + "Total Workouts: 5\n"
-                + "Avg Reps per Workout: 12\n"
-                + "Avg Sets per Workout: 3\n"
-                + "Avg Duration: 35 min\n"
-                + "Avg Calories Burned: 280";
-    }
 }

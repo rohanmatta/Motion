@@ -1,66 +1,74 @@
+// View/TrackProgress/TrackProgressView.java
 package View.TrackProgress;
 
-import Model.TrackProgress.WorkoutSession;
-import Model.TrackProgress.ProgressData;
-import Observer.Observer;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import Model.TrackProgress.WorkoutEntry;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.sql.Date;
 import java.util.List;
 
 /**
- * Stub that displays past workout sessions and progress trends.
- * Now implements Observer to receive progress updates.
+ * View for tracking workout progress.
+ * Provides date picker, input fields, and a table.
  */
-public class TrackProgressView implements Observer {
+public class TrackProgressView extends JFrame {
+    private final JSpinner dateSpinner   = new JSpinner(new SpinnerDateModel());
+    private final JTextField nameField   = new JTextField(15);
+    private final JSpinner setsSpinner   = new JSpinner(new SpinnerNumberModel(3, 1, 20, 1));
+    private final JSpinner repsSpinner   = new JSpinner(new SpinnerNumberModel(10, 1, 100, 1));
+    private final JSpinner weightSpinner = new JSpinner(new SpinnerNumberModel(45, 1, 500, 1));
+    private final JButton addButton      = new JButton("Add Workout");
+    private final DefaultTableModel tableModel;
+    private final JTable table;
 
-    @Override
-    public void update(ProgressData progressData) {
-        // This method will be called when ProgressSubject notifies observers.
-        System.out.println("TrackProgressView updated: " + progressData.toString());
-        // Here you could add code to update UI components, if applicable.
+    public TrackProgressView() {
+        super("Track Progress");
+        dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"));
+
+        // Table setup
+        tableModel = new DefaultTableModel(
+                new String[]{"Date","Workout","Sets","Reps","Weight"}, 0
+        );
+        table = new JTable(tableModel);
+
+        // Form layout
+        JPanel form = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
+        form.add(new JLabel("Date:"));        form.add(dateSpinner);
+        form.add(new JLabel("Workout:"));     form.add(nameField);
+        form.add(new JLabel("Sets:"));        form.add(setsSpinner);
+        form.add(new JLabel("Reps:"));        form.add(repsSpinner);
+        form.add(new JLabel("Weight:"));      form.add(weightSpinner);
+        form.add(addButton);
+
+        setLayout(new BorderLayout(8,8));
+        add(form, BorderLayout.NORTH);
+        add(new JScrollPane(table), BorderLayout.CENTER);
+
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
-    /**
-     * Stub that displays past workout sessions with dummy data.
-     */
-    public void displayPastWorkouts() {
-        System.out.println("TrackProgressView: Fetching past workout sessions (Stub)...");
-
-        // Stub that uses predefined values instead of fetching real data
-        List<WorkoutSession> workoutSessions = new ArrayList<>();
-        workoutSessions.add(new WorkoutSession(1, "Bench Press", LocalDateTime.now(), null));
-        workoutSessions.add(new WorkoutSession(1, "Squats", LocalDateTime.now(), null));
-
-        if (workoutSessions.isEmpty()) {
-            System.out.println("TrackProgressView: No workouts logged yet (Stub).");
-            return;
-        }
-
-        System.out.println("{Your Workout History (Stub)}");
-        for (WorkoutSession session : workoutSessions) {
-            System.out.println("Workout: " + session.getWorkoutName());
-            System.out.println("Date: " + session.getSessionDate());
-            System.out.println("Sets: 3 (Stub)");
-            System.out.println("Reps: 10 (Stub)");
-            System.out.println("Duration: 45 minutes (Stub)");
-            System.out.println("Calories Burned: 350 (Stub)");
-        }
-    }
+    // Exposed getters for controller
+    public Date getDate()              { return new Date(((java.util.Date) dateSpinner.getValue()).getTime()); }
+    public String getWorkoutName()     { return nameField.getText().trim(); }
+    public int    getSets()            { return (Integer) setsSpinner.getValue(); }
+    public int    getReps()            { return (Integer) repsSpinner.getValue(); }
+    public int    getWeight()          { return (Integer) weightSpinner.getValue(); }
+    public JButton getAddButton()      { return addButton; }
 
     /**
-     * Stub that displays progress trends with dummy values.
+     * Refresh the table using the provided list of entries.
      */
-    public void displayProgressTrends() {
-        System.out.println("TrackProgressView: Fetching progress trends (Stub)...");
-
-        // Stubs that uses dummy progress trends
-        String progressTrends = "{Progress Trends (Stub)}\n"
-                + "Total Workouts: 5\n"
-                + "Avg Reps per Workout: 12\n"
-                + "Avg Sets per Workout: 3\n"
-                + "Avg Duration: 35 min\n"
-                + "Avg Calories Burned: 280";
-
-        System.out.println(progressTrends);
+    public void updateTable(List<WorkoutEntry> entries) {
+        tableModel.setRowCount(0);
+        for (WorkoutEntry e : entries) {
+            tableModel.addRow(new Object[]{
+                    e.getDate(), e.getWorkoutName(), e.getSets(), e.getReps(), e.getWeight()
+            });
+        }
     }
 }
