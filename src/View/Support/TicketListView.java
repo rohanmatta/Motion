@@ -2,6 +2,7 @@ package View.Support;
 
 import Controller.TicketController;
 import Model.Support.Ticket;
+import View.MainMenuView;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -12,6 +13,7 @@ public class TicketListView extends JFrame {
     private JButton openTicketButton;
     private JScrollPane ticketPane;
     private JTable ticketTable;
+    private JButton backToMenuButton;
     private final TicketController controller;
 
 
@@ -44,6 +46,10 @@ public class TicketListView extends JFrame {
                 this.dispose();
                 new SupportTicketView(controller);
             }
+        });
+        backToMenuButton.addActionListener((e) -> {
+            this.dispose();
+            new MainMenuView(this.controller.getActiveUser());
         });
     }
 
