@@ -15,5 +15,11 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
+    <data-source name="@mysql.up.ist.psu.edu" uuid="791f678f-95b7-4a48-aa5f-3f32575bce41">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>rjz5227</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>
