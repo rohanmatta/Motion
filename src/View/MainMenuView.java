@@ -1,8 +1,10 @@
 package View;
 
+import Controller.LoginController;
 import Controller.TrackProgressController;
 import Controller.TicketController;
 import Model.Login.User;
+import View.Login.LoginView;
 import View.ShareProgress.ShareProgressView;
 import View.Support.TicketListView;
 import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
@@ -46,6 +48,7 @@ public class MainMenuView extends JFrame {
         logoutButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Logging out...");
             dispose();
+            new LoginView(new LoginController());
         });
 
         // add buttons in order

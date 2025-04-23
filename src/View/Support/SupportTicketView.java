@@ -12,6 +12,7 @@ public class SupportTicketView extends JFrame {
     private JTextArea chatTextArea;
     private JButton sendButton;
     private JPanel chatPane;
+    private JButton backButton;
 
 
     public SupportTicketView(TicketController ticketController) {
@@ -48,6 +49,10 @@ public class SupportTicketView extends JFrame {
         sendButton.addActionListener((e) -> {
             controller.addMessage(new Message(chatTextArea.getText(), controller.getActiveUser()));
             updateMessages();
+        });
+        backButton.addActionListener((e) -> {
+            this.dispose();
+            new TicketListView(this.controller);
         });
     }
 }
