@@ -1,23 +1,19 @@
 package View;
 
-import View.ShareProgress.ShareProgressView;
-import View.Support.TicketView;
 import Controller.TicketController;
+import View.ShareProgress.ShareProgressView;
+import View.Support.TicketListView;
+import View.Support.TicketView;
 import Model.Login.User;
-import Model.ShareProgress.SocialMediaAccount;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainMenuView extends JFrame {
     private final User currentUser;
-    private final SocialMediaAccount currentAccount;
-    private final TicketController ticketController;
 
-    public MainMenuView(User user, SocialMediaAccount account, TicketController ticketController) {
+    public MainMenuView(User user) {
         this.currentUser = user;
-        this.currentAccount = account;
-        this.ticketController = ticketController;
 
         setTitle("Main Menu");
         setSize(400, 300);
@@ -32,12 +28,11 @@ public class MainMenuView extends JFrame {
         shareProgressButton.addActionListener(e -> {
             ShareProgressView view = new ShareProgressView();
             view.displayUserProgress(currentUser);
-            view.displaySocialMediaPosts(currentAccount);
         });
 
         supportButton.addActionListener(e -> {
-            TicketView ticketView = new TicketView(ticketController);
-            ticketView.listTickets();  // or ticketView.viewTicket(); depending on your logic
+            new TicketListView(new TicketController(user));
+            this.dispose();
         });
 
         logoutButton.addActionListener(e -> {
@@ -50,8 +45,5 @@ public class MainMenuView extends JFrame {
         add(logoutButton);
 
         setVisible(true);
-    }
-
-    public MainMenuView(User user) {
     }
 }
