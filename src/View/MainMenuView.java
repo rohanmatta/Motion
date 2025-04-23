@@ -5,6 +5,7 @@ import Controller.TicketController;
 import Model.Login.User;
 import View.ShareProgress.ShareProgressView;
 import View.Support.TicketListView;
+import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,8 +24,7 @@ public class MainMenuView extends JFrame {
         // 1) Share Progress
         JButton shareProgressButton = new JButton("Share Progress");
         shareProgressButton.addActionListener(e -> {
-            ShareProgressView view = new ShareProgressView();
-            view.displayUserProgress(currentUser);
+            new ShareProgressWizardPattern().setVisible(true);
         });
 
         // 2) Track Progress
