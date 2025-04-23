@@ -1,4 +1,3 @@
-// View/TrackProgress/TrackProgressView.java
 package View.TrackProgress;
 
 import Model.TrackProgress.WorkoutEntry;
@@ -9,10 +8,7 @@ import java.awt.*;
 import java.sql.Date;
 import java.util.List;
 
-/**
- * View for tracking workout progress.
- * Provides date picker, input fields, and a table.
- */
+
 public class TrackProgressView extends JFrame {
     private final JSpinner dateSpinner   = new JSpinner(new SpinnerDateModel());
     private final JTextField nameField   = new JTextField(15);
@@ -27,13 +23,12 @@ public class TrackProgressView extends JFrame {
         super("Track Progress");
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"));
 
-        // Table setup
         tableModel = new DefaultTableModel(
                 new String[]{"Date","Workout","Sets","Reps","Weight"}, 0
         );
         table = new JTable(tableModel);
 
-        // Form layout
+        //Form Layout
         JPanel form = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         form.add(new JLabel("Date:"));        form.add(dateSpinner);
         form.add(new JLabel("Workout:"));     form.add(nameField);
@@ -52,7 +47,7 @@ public class TrackProgressView extends JFrame {
         setVisible(true);
     }
 
-    // Exposed getters for controller
+    //getters for controller
     public Date getDate()              { return new Date(((java.util.Date) dateSpinner.getValue()).getTime()); }
     public String getWorkoutName()     { return nameField.getText().trim(); }
     public int    getSets()            { return (Integer) setsSpinner.getValue(); }
@@ -60,9 +55,7 @@ public class TrackProgressView extends JFrame {
     public int    getWeight()          { return (Integer) weightSpinner.getValue(); }
     public JButton getAddButton()      { return addButton; }
 
-    /**
-     * Refresh the table using the provided list of entries.
-     */
+
     public void updateTable(List<WorkoutEntry> entries) {
         tableModel.setRowCount(0);
         for (WorkoutEntry e : entries) {
