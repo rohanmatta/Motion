@@ -1,10 +1,11 @@
 package View;
 
+import Controller.TrackProgressController;
 import Controller.TicketController;
+import Model.Login.User;
 import View.ShareProgress.ShareProgressView;
 import View.Support.TicketListView;
-import View.Support.TicketView;
-import Model.Login.User;
+import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,34 +17,44 @@ public class MainMenuView extends JFrame {
         this.currentUser = user;
 
         setTitle("Main Menu");
-        setSize(400, 300);
+        setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(4, 1, 10, 10));  // now 4 rows
 
+        // 1) Share Progress
         JButton shareProgressButton = new JButton("Share Progress");
-        JButton supportButton = new JButton("Support");
-        JButton logoutButton = new JButton("Logout");
-
-        // Lambda replaced with expression form
         shareProgressButton.addActionListener(e -> {
-            ShareProgressView view = new ShareProgressView();
-            view.displayUserProgress(currentUser);
+            new ShareProgressWizardPattern().setVisible(true);
         });
 
+        // 2) Track Progress
+        JButton trackProgressButton = new JButton("Track Progress");
+        trackProgressButton.addActionListener(e -> {
+            // Launch your Track Progress window
+            new TrackProgressController(currentUser);
+        });
+
+        // 3) Support Tickets
+        JButton supportButton = new JButton("Support");
         supportButton.addActionListener(e -> {
-            new TicketListView(new TicketController(user));
-            this.dispose();
+            new TicketListView(new TicketController(currentUser));
+            dispose();
         });
 
+        // 4) Logout
+        JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Logging out...");
             dispose();
         });
 
+        // add buttons in order
         add(shareProgressButton);
+        add(trackProgressButton);
         add(supportButton);
         add(logoutButton);
 
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 }

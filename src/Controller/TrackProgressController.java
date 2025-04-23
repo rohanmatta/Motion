@@ -31,7 +31,7 @@ public class TrackProgressController {
         sessions.clear();
         String sql = """
                 SELECT id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight
-                  FROM workouts
+                  FROM Workouts
                  WHERE user_id = ?
                  ORDER BY `Date` DESC
                 """;
@@ -58,7 +58,7 @@ public class TrackProgressController {
 
     private void onAdd() {
         String sql = """
-                INSERT INTO workouts
+                INSERT INTO Workouts
                   (user_id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight)
                 VALUES (?,?,?,?,?,?)
                 """;
