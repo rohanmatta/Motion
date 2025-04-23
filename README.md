@@ -1,12 +1,12 @@
 Rohan Matta, Brett Cunningham, Sydney Black, Ryan Zanoni
 
 ## M04-A03 Contributions: (UPDATE THIS)
-| Name                         | Contribution                                                   |
-|------------------------------|----------------------------------------------------------------|
-| Brett Cunningham (Team Lead) | Worked on initial usecase                                      |
-| Rohan Matta                  | Worked on initial usecase                                      |
-| Sydney Black                 | Worked on initial usecase                                      |
-| Ryan Zanoni                  | Worked on initial usecase, set up database and log in function |
+| Name                         | Contribution                        |
+|------------------------------|-------------------------------------|
+| Brett Cunningham (Team Lead) | Worked on Tracking Progress Usecase |
+| Rohan Matta                  | Worked on Sharing Progress Usecase  |
+| Sydney Black                 | Worked on initial Main Menu         |
+| Ryan Zanoni                  | Worked on Refactoring Code          |
 
 Use Cases Scoped for Design and Implementation (Track Progress System - Athlete)
 1. The athlete logs into the system to access their workout history and to have progress tracking features.
@@ -25,6 +25,11 @@ implementations i.e. the class or classes used and who implemented them.
 
 Refactoring Implementations:
 
+
+Use Cases:
+- Support Ticket
+- Tracking Progress
+- Sharing Progress
  
 Login details:
 login: admin
