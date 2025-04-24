@@ -1,4 +1,3 @@
-// Model/TrackProgress/WorkoutEntry.java
 package Model.TrackProgress;
 
 import java.sql.Date;

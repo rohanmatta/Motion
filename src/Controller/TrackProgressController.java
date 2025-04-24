@@ -1,4 +1,3 @@
-// Controller/TrackProgressController.java
 package Controller;
 
 import Model.Login.User;
@@ -95,9 +94,6 @@ public class TrackProgressController {
         }
     }
 
-    /**
-     * Expose sessions list for other parts of the app if needed.
-     */
     public List<WorkoutEntry> getSessions() {
         return sessions;
     }
