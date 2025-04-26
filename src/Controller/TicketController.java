@@ -37,7 +37,7 @@ public class TicketController {
             this.activeUser = activeUser;
             DbController dbController = new DbController();
             Connection conn = dbController.getConn();
-            PreparedStatement stmt = conn.prepareStatement("select T.ticket_id, T.subject, T.status, su.user_name, su.user_id, u.user_name, u.user_id from tickets AS T left join users su on tickets.support_user = su.user_id left join users u on tickets.user = u.user_id");
+            PreparedStatement stmt = conn.prepareStatement("select T.ticket_id, T.subject, T.status, su.user_name, su.user_id, u.user_name, u.user_id from tickets AS T left join users su on T.support_user = su.user_id left join users u on T.user = u.user_id");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Ticket.TicketBuilder builder = new Ticket.TicketBuilder();
@@ -47,7 +47,7 @@ public class TicketController {
                 User user = new User();
                 user.setUserID(rs.getString("u.user_id"));
                 user.setUserName(rs.getString("u.user_name"));
-                builder.setTicketId(rs.getLong("T.ticket_id")).setSupportUser(supportUser).setUser(user).setMessages(new ArrayList<>());
+                builder.setTicketId(rs.getLong("T.ticket_id")).setSupportUser(supportUser).setUser(user).setSubject(rs.getString("T.subject")).setMessages(new ArrayList<>());
                 Status status = Status.valueOf(rs.getString("T.status"));
                 Ticket ticket = builder.build();
                 if (this.activeUser.checkUserRole(Role.ADMIN) || user.getUserID().equals(activeUser.getUserID()) || supportUser.getUserID().equals(activeUser.getUserID())) {
@@ -56,8 +56,8 @@ public class TicketController {
                     } else if (status == Status.ARCHIVED) {
                         this.archive.add(ticket);
                     }
-                    stmt = conn.prepareStatement("select u.user_id, u.user_name, m.message_content, m.message_id from messages AS m left join users u on messages.user_id = u.user_id where ticket_id = ? order by sent_at");
-                    stmt.setLong(1, activeTicket.getTicketId());
+                    stmt = conn.prepareStatement("select u.user_id, u.user_name, m.message_content, m.message_id from messages AS m left join users u on m.user_id = u.user_id where ticket_id = ? order by sent_at");
+                    stmt.setLong(1, ticket.getTicketId());
                     rs = stmt.executeQuery();
                     while (rs.next()) {
                         user = new User();
@@ -71,6 +71,7 @@ public class TicketController {
             }
             System.out.println(this.activeTicket);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DBError("Error getting tickets, please try again");
         }
     }

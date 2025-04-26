@@ -29,17 +29,27 @@ public class SupportTicketView extends JFrame {
     private void updateMessages() {
         chatPane.removeAll();
         chatPane.setLayout(new BoxLayout(chatPane, BoxLayout.Y_AXIS));
-        chatPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+//        chatPane.setMaximumSize(new Dimension(this.getWidth()-5, Integer.MAX_VALUE));
         for (Message m : this.controller.getActiveTicket().getMessages()) {
+            JPanel wrapper = new JPanel(
+                    new FlowLayout(m.getUser().getUserID().equals(this.controller.getActiveUser().getUserID()) ?
+                            FlowLayout.RIGHT :
+                            FlowLayout.LEFT )
+            );
+            wrapper.setAlignmentX(Component.LEFT_ALIGNMENT);
+            wrapper.setAlignmentY(Component.TOP_ALIGNMENT);
+            wrapper.setOpaque(false);
+
             JLabel text = new JLabel();
             text.setText(m.getUser().getUserName() + ": " + m.getText());
-            text.setAlignmentX(
-                    m.getUser().getUserID().equals(this.controller.getActiveUser().getUserID()) ?
-                            Component.RIGHT_ALIGNMENT :
-                            Component.LEFT_ALIGNMENT );
             text.setVisible(true);
-            text.setMaximumSize(new Dimension(Integer.MAX_VALUE, text.getPreferredSize().height));
-            chatPane.add(text);
+
+            wrapper.add(text);
+
+            Dimension preferredSize = wrapper.getPreferredSize();
+            wrapper.setMaximumSize(new Dimension(this.getWidth()-5, preferredSize.height));
+
+            chatPane.add(wrapper);
         }
         chatPane.revalidate();
         chatPane.repaint();
