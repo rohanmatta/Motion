@@ -63,7 +63,7 @@ public class LoginController {
 //                System.out.println("User Found");
                 String pass = rs.getString("password");
                 user.setUserID(String.valueOf(rs.getLong("user_id")));
-                if (passwordEncoder.matches(pass, user.getUserPassword())) {
+                if (passwordEncoder.matches(user.getUserPassword(), pass)) {
                     stmt = conn.prepareStatement("select email, roles from users where users.user_id = ?");
                     stmt.setString(1, user.getUserID());
                     ResultSet rs2 = stmt.executeQuery();
