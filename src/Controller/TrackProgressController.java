@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.DB.DBError;
 import Model.Login.User;
 import Model.TrackProgress.WorkoutEntry;
 import View.TrackProgress.TrackProgressView;
@@ -11,14 +12,14 @@ import java.util.List;
 
 public class TrackProgressController {
     private final User user;
-    private final Connection conn;
+    private Connection conn;
     private final TrackProgressView view;
     private final List<WorkoutEntry> sessions = new ArrayList<>();
 
-    public TrackProgressController(User user) {
+    public TrackProgressController(User user) throws DBError {
         this.user = user;
-        this.conn = new DbController().getConn();
         this.view = new TrackProgressView();
+        this.conn = new DbController().getConn();
 
         loadSessions();
         view.updateTable(sessions);

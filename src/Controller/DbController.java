@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.DB.DBError;
+
 import java.security.InvalidParameterException;
 import java.sql.*;
 
@@ -10,7 +12,7 @@ public class DbController {
     private final String password = "EsTMYK62";
     private Connection conn = null;
 
-    public DbController() {
+    public DbController() throws DBError {
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to MySQL!");
@@ -26,11 +28,11 @@ public class DbController {
             this.conn = conn;
 
         } catch (SQLException e) {
-            throw new InvalidParameterException("DB Connection invalid");
+            throw new DBError("DB Connection error, please restart the application and try again");
         }
     }
 
-    public Connection getConn() {
+    public Connection getConn() throws DBError {
         if (conn == null) {
             DbController dbController = new DbController();
             return dbController.getConn();

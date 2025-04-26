@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.DB.DBError;
 import Model.Login.Role;
 import Model.Login.User;
 import Model.Support.Message;
@@ -29,7 +30,7 @@ public class TicketController {
      * Initializes empty controller at the moment
      * Will be updated to sync with DB or File
      */
-    public TicketController(User activeUser) {
+    public TicketController(User activeUser) throws DBError {
         this.tickets = new ArrayList<>();
         this.archive = new ArrayList<>();
         try {
@@ -70,7 +71,7 @@ public class TicketController {
             }
             System.out.println(this.activeTicket);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new DBError("Error getting tickets, please try again");
         }
     }
 

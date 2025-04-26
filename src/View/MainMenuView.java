@@ -3,6 +3,7 @@ package View;
 import Controller.LoginController;
 import Controller.TrackProgressController;
 import Controller.TicketController;
+import Model.DB.DBError;
 import Model.Login.User;
 import View.Login.LoginView;
 import View.ShareProgress.ShareProgressView;
@@ -33,13 +34,24 @@ public class MainMenuView extends JFrame {
         JButton trackProgressButton = new JButton("Track Progress");
         trackProgressButton.addActionListener(e -> {
             // Launch your Track Progress window
-            new TrackProgressController(currentUser);
+            try {
+                new TrackProgressController(currentUser);
+            } catch (DBError ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+                return;
+            }
+            dispose();
         });
 
         // 3) Support Tickets
         JButton supportButton = new JButton("Support");
         supportButton.addActionListener(e -> {
-            new TicketListView(new TicketController(currentUser));
+            try {
+                new TicketListView(new TicketController(currentUser));
+            } catch (DBError ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+                return;
+            }
             dispose();
         });
 

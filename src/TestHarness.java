@@ -2,6 +2,7 @@ import Controller.ShareProgressController;
 import Controller.TicketController;
 import Controller.WarmUpCreateController;
 import Controller.TrackProgressController;
+import Model.DB.DBError;
 import Model.Login.User;
 import Model.ShareProgress.Post;
 import Model.ShareProgress.SocialMediaAccount;
@@ -116,7 +117,12 @@ public class TestHarness {
         User ticketUser = new User();
         ticketUser.setUserName("TicketUser");
         ticketUser.setUserID("test123");
-        TicketController controller = new TicketController(ticketUser);
+        TicketController controller = null;
+        try {
+            controller = new TicketController(ticketUser);
+        } catch (DBError e) {
+            throw new RuntimeException(e);
+        }
         SupportUser supportUser = new SupportUser();
         supportUser.setUserName("testSupport");
         supportUser.setUserPassword("test");
