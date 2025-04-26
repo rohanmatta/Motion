@@ -1,0 +1,35 @@
+<component name="libraryTable">
+  <library name="springframework.boot.spring.starter.security" type="repository">
+    <properties maven-id="org.springframework.boot:spring-boot-starter-security:3.4.5" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/spring-boot-starter-security-3.4.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-boot-starter-3.4.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-boot-3.4.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-boot-autoconfigure-3.4.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-boot-starter-logging-3.4.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/logback-classic-1.5.18.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/logback-core-1.5.18.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-2.0.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/log4j-to-slf4j-2.24.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/log4j-api-2.24.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jul-to-slf4j-2.0.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jakarta.annotation-api-2.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-core-6.2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-jcl-6.2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/snakeyaml-2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-aop-6.2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-beans-6.2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-security-config-6.4.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-security-core-6.4.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-security-crypto-6.4.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/micrometer-observation-1.14.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/micrometer-commons-1.14.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-context-6.2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-security-web-6.4.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-expression-6.2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-web-6.2.6.jar!/" />
+    </CLASSES>
+    <JAVADOC/>
+    <SOURCES />
+  </library>
+</component>

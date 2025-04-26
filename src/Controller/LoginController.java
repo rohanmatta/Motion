@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Login.User;
 import View.Login.LoginView;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ public class LoginController {
 
     private LoginView loginViewFrame;
     private User user;
+    private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     /**
      * Constructs a new {@code LoginController} with a default {@link LoginView} instance.
@@ -54,18 +56,23 @@ public class LoginController {
             DbController dbController = new DbController();
             Connection conn = dbController.getConn();
             System.out.println(user);
-            PreparedStatement stmt = conn.prepareStatement("select * from users where users.user_name = ? and users.password = ?");
+            PreparedStatement stmt = conn.prepareStatement("select user_id, password from users where users.user_name = ?");
             stmt.setString(1, user.getUserName());
-            stmt.setString(2, user.getUserPassword());
-            System.out.println("hello?");
-            System.out.println(stmt);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                System.out.println("User Found");
-                user.setUserEmail(rs.getString("email"));
+//                System.out.println("User Found");
+                String pass = rs.getString("password");
                 user.setUserID(String.valueOf(rs.getLong("user_id")));
-                user.setUserRole(rs.getLong("roles"));
-                return true;
+                if (passwordEncoder.matches(pass, user.getUserPassword())) {
+                    stmt = conn.prepareStatement("select email, roles from users where users.user_id = ?");
+                    stmt.setString(1, user.getUserID());
+                    ResultSet rs2 = stmt.executeQuery();
+                    if (rs2.next()) {
+                        user.setUserEmail(rs2.getString("email"));
+                        user.setUserRole(rs2.getLong("roles"));
+                        return true;
+                    }
+                }
             }
             return false;
         } catch (Exception e) {
