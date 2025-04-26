@@ -1,7 +1,9 @@
 package Controller;
 
+import Model.Login.Role;
 import Model.Login.User;
 import Model.Support.Message;
+import Model.Support.Status;
 import Model.Support.SupportUser;
 import Model.Support.Ticket;
 
@@ -30,33 +32,40 @@ public class TicketController {
     public TicketController(User activeUser) {
         this.tickets = new ArrayList<>();
         this.archive = new ArrayList<>();
-        Ticket.TicketBuilder builder = new Ticket.TicketBuilder();
         try {
+            this.activeUser = activeUser;
             DbController dbController = new DbController();
             Connection conn = dbController.getConn();
-            PreparedStatement stmt = conn.prepareStatement("select * from tickets left join users su on tickets.support_user = su.user_id left join users u on tickets.user = u.user_id");
+            PreparedStatement stmt = conn.prepareStatement("select T.ticket_id, T.subject, T.status, su.user_name, su.user_id, u.user_name, u.user_id from tickets AS T left join users su on tickets.support_user = su.user_id left join users u on tickets.user = u.user_id");
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
+                Ticket.TicketBuilder builder = new Ticket.TicketBuilder();
                 SupportUser supportUser = new SupportUser();
                 supportUser.setUserID(String.valueOf(rs.getLong("su.user_id")));
                 supportUser.setUserName(rs.getString("su.user_name"));
                 User user = new User();
                 user.setUserID(rs.getString("u.user_id"));
                 user.setUserName(rs.getString("u.user_name"));
-                builder.setTicketId(rs.getLong("ticket_id")).setSupportUser(supportUser).setUser(user).setMessages(new ArrayList<>());
-                this.activeTicket = builder.build();
-                this.activeUser = activeUser;
-                this.tickets.add(activeTicket);
-                stmt = conn.prepareStatement("select * from messages left join users u on messages.user_id = u.user_id where ticket_id = ? order by sent_at");
-                stmt.setLong(1, activeTicket.getTicketId());
-                rs = stmt.executeQuery();
-                while (rs.next()) {
-                    user = new User();
-                    user.setUserID(rs.getString("u.user_id"));
-                    user.setUserName(rs.getString("u.user_name"));
-                    Message m = new Message(rs.getString("message_content"), user);
-                    m.setId(rs.getLong("message_id"));
-                    this.activeTicket.addMessage(m);
+                builder.setTicketId(rs.getLong("T.ticket_id")).setSupportUser(supportUser).setUser(user).setMessages(new ArrayList<>());
+                Status status = Status.valueOf(rs.getString("T.status"));
+                Ticket ticket = builder.build();
+                if (this.activeUser.checkUserRole(Role.ADMIN) || user.getUserID().equals(activeUser.getUserID()) || supportUser.getUserID().equals(activeUser.getUserID())) {
+                    if (status == Status.ACTIVE) {
+                        this.tickets.add(ticket);
+                    } else if (status == Status.ARCHIVED) {
+                        this.archive.add(ticket);
+                    }
+                    stmt = conn.prepareStatement("select u.user_id, u.user_name, m.message_content, m.message_id from messages AS m left join users u on messages.user_id = u.user_id where ticket_id = ? order by sent_at");
+                    stmt.setLong(1, activeTicket.getTicketId());
+                    rs = stmt.executeQuery();
+                    while (rs.next()) {
+                        user = new User();
+                        user.setUserID(rs.getString("u.user_id"));
+                        user.setUserName(rs.getString("u.user_name"));
+                        Message m = new Message(rs.getString("message_content"), user);
+                        m.setId(rs.getLong("message_id"));
+                        ticket.addMessage(m);
+                    }
                 }
             }
             System.out.println(this.activeTicket);
