@@ -26,7 +26,7 @@ public class ShareProgressWizardPattern extends JFrame {
         // Initialize components
         mainPanel = new JPanel(new BorderLayout());
         titleLabel = new JLabel("Step 1 of 4", SwingConstants.CENTER); // Step title
-        stepLabel = new JLabel("Step 1: Enter post content", SwingConstants.CENTER); // Step description
+        stepLabel = new JLabel("Step 1: Select post from Track Progress", SwingConstants.CENTER);
         nextButton = new JButton("Next");
         backButton = new JButton("Back");
         progressBar = new JProgressBar(0, totalSteps);
@@ -89,7 +89,7 @@ public class ShareProgressWizardPattern extends JFrame {
         titleLabel.setText("Step " + currentStep + " of " + totalSteps); // Update step title
         switch (currentStep) {
             case 1:
-                stepLabel.setText("Step 1: Enter post content");
+                stepLabel.setText("Step 1: Select post from Track Progress");
                 inputField.setText(""); // Clear input field
                 inputField.setToolTipText("Write your post content here...");
                 break;
