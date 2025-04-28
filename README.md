@@ -36,6 +36,17 @@ and that this file describes your refactoring
 implementations i.e. the class or classes used and who implemented them.
 
 Refactoring Implementations:
+1. No indication of login attempt if it fails - New Label in LoginView.java 
+2. Reference to personal table in ticket - Removed in TicketController.java
+3. Message chat display does not show 2 column view if only one person has sent a message - Reimplemented display logic in SupportTicketView.java 
+4. DB errors just print to console and the app effectively crashes - Added message dialog system
+5. There are no permission checks on the ticket messaging system yet - Added check in UI
+6. Ticket list view does not filter by permissions - added check before 
+7. Password is stored in plain text - Added bcrypt hashing in LoginController.java
+8. No way to get back to list view from chat - Added Back button
+9. Ticket view doesn’t filter out archived conversations - Implemented archive list
+10. All queries select all columns - Fixed queries in TicketController.java
+11. No menu screen to chose app flow - Implemented app flow
 
 
 Use Cases:
