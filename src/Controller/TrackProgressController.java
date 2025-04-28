@@ -1,3 +1,4 @@
+// TrackProgressController.java
 package Controller;
 
 import Model.DB.DBError;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class TrackProgressController {
     private final User user;
-    private Connection conn;
+    private final Connection conn;
     private final TrackProgressView view;
     private final List<WorkoutEntry> sessions = new ArrayList<>();
 
@@ -28,6 +29,9 @@ public class TrackProgressController {
 
         // add‐workout wiring
         view.getAddButton().addActionListener(e -> onAdd());
+
+        // delete‐workout wiring
+        view.getDeleteButton().addActionListener(e -> onDelete());
 
         // back‐to‐menu wiring
         view.getBackButton().addActionListener(e -> {
@@ -125,6 +129,38 @@ public class TrackProgressController {
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(view, "Invalid input or DB error");
+        }
+    }
+
+    private void onDelete() {
+        int row = view.getTable().getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(view, "Please select a workout to delete.");
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(
+                view,
+                "Really delete this workout?",
+                "Confirm Delete",
+                JOptionPane.YES_NO_OPTION
+        );
+        if (confirm != JOptionPane.YES_OPTION) return;
+
+        WorkoutEntry w = sessions.get(row);
+        String sql = "DELETE FROM Workouts WHERE id = ?";
+
+        try (PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setLong(1, w.getId());
+            if (st.executeUpdate() == 1) {
+                sessions.remove(row);
+                view.updateTable(sessions);
+                JOptionPane.showMessageDialog(view, "Workout deleted.");
+            } else {
+                JOptionPane.showMessageDialog(view, "Delete failed.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(view, "Error deleting workout.");
         }
     }
 
