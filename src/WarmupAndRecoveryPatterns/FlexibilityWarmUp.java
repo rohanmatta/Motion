@@ -1,8 +1,13 @@
 package WarmupAndRecoveryPatterns;
 
-public class FlexibilityWarmUp implements WarmUpPlan{
+public class FlexibilityWarmUp extends WarmUpPlan {
+
     @Override
-    public void showPlan() {
-        System.out.println("Flexibility Plan: Hamstring stretch, toe touches, yoga poses.");
+    public void displayPlanDetails() {
+        System.out.println("Flexibility Warmup Plan:");
+        System.out.println("- Standing quad stretch: 30 sec per leg");
+        System.out.println("- Hamstring stretch: 30 sec");
+        System.out.println("- Shoulder rolls: 30 sec");
+        System.out.println("- Neck stretch: 30 sec");
     }
 }

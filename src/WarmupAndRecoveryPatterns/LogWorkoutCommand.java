@@ -1,14 +1,16 @@
 package WarmupAndRecoveryPatterns;
 
 public class LogWorkoutCommand implements Command {
-    private ProgressTracker tracker;
+    private WarmUpService service;
+    private String workoutDetails;
 
-    public LogWorkoutCommand(ProgressTracker tracker) {
-        this.tracker = tracker;
+    public LogWorkoutCommand(WarmUpService service, String workoutDetails) {
+        this.service = service;
+        this.workoutDetails = workoutDetails;
     }
 
     @Override
     public void execute() {
-        tracker.logWorkout();
+        service.logWorkout(workoutDetails);
     }
 }

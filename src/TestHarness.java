@@ -69,7 +69,8 @@ public class TestHarness {
         System.out.println("\nTesting ViewWarmUpOptions...");
         ViewWarmUpOptions viewWarmUpOptions = new ViewWarmUpOptions();
         // Simulate displaying the warm-up options for the user
-        viewWarmUpOptions.showOptions();
+        viewWarmUpOptions.setVisible(true);
+
 
 
         //..............................

@@ -1,44 +1,76 @@
 package WarmupAndRecoveryPatterns;
 
+import View.WarmupAndRecovery.WarmupSessionView;
+
 import javax.swing.*;
+import java.awt.*;
+import java.util.Random;
 
 public class WarmupAndRecoveryCommandPattern {
     public JPanel mainPanel;
     private JButton logWorkoutButton;
     private JButton startWarmUpButton;
+    private JLabel suggestedWarmupLabel;
+
+    private String suggestedWarmup;
+    private WarmUpService warmUpService;
 
     public WarmupAndRecoveryCommandPattern() {
-        // Initialize mainPanel if not initialized by a GUI designer
         mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(3, 1, 10, 10)); // label + 2 buttons
 
-        // Add buttons to the panel
+        suggestedWarmupLabel = new JLabel("", SwingConstants.CENTER);
         logWorkoutButton = new JButton("Log Workout");
-        startWarmUpButton = new JButton("Start WarmUp");
-        mainPanel.add(logWorkoutButton);
+        startWarmUpButton = new JButton("Start Suggested Warmup");
+
+        mainPanel.add(suggestedWarmupLabel);
         mainPanel.add(startWarmUpButton);
+        mainPanel.add(logWorkoutButton);
 
-        // Initialize the services and commands
-        ProgressTracker tracker = new ProgressTracker();
-        WarmUpService warmUpService = new WarmUpService();
+        warmUpService = new WarmUpService();
+        suggestedWarmup = suggestWarmup();
+        suggestedWarmupLabel.setText("Suggested Warmup: " + suggestedWarmup);
 
-        Command logWorkoutCommand = new LogWorkoutCommand(tracker);
-        Command startWarmUpCommand = new StartWarmUpCommand(warmUpService);
-
-        logWorkoutButton.addActionListener(e -> logWorkoutCommand.execute());
-        startWarmUpButton.addActionListener(e -> startWarmUpCommand.execute());
+        startWarmUpButton.addActionListener(e -> handleStartWarmup());
+        logWorkoutButton.addActionListener(e -> handleLogWorkout());
     }
 
-    // 👇 ADD THIS METHOD RIGHT HERE (empty if not manually creating components)
+    private String suggestWarmup() {
+        String[] warmups = {"cardio", "strength", "flexibility"};
+        Random random = new Random();
+        int index = random.nextInt(warmups.length);
+        return warmups[index];
+    }
+
+    private void handleStartWarmup() {
+        WarmUpPlan plan = WarmUpPlanFactory.createWarmUpPlan(suggestedWarmup);
+
+        if (plan != null) {
+            // Show real warmup in a GUI window
+            new WarmupSessionView(suggestedWarmup).setVisible(true);
+        } else {
+            System.out.println("No matching warmup plan found.");
+        }
+
+        Command startCommand = new StartWarmUpCommand(warmUpService, suggestedWarmup);
+        startCommand.execute();
+    }
+
+    private void handleLogWorkout() {
+        Command logCommand = new LogWorkoutCommand(warmUpService, suggestedWarmup + " Completed");
+        logCommand.execute();
+    }
+
     private void createUIComponents() {
-        // You can leave this empty unless you're creating custom components manually
+        // Empty unless manually creating components
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Command Pattern Demo");
+            JFrame frame = new JFrame("Warmup and Recovery Command Pattern Demo");
             frame.setContentPane(new WarmupAndRecoveryCommandPattern().mainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(300, 200);
+            frame.setSize(400, 250);
             frame.setVisible(true);
         });
     }

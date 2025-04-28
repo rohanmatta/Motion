@@ -5,10 +5,12 @@ import Controller.TrackProgressController;
 import Controller.TicketController;
 import Model.DB.DBError;
 import Model.Login.User;
+import Model.Login.Role;
 import View.Login.LoginView;
-import View.ShareProgress.ShareProgressView;
-import View.Support.TicketListView;
 import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
+import View.Support.TicketListView;
+import View.WarmupAndRecovery.ViewWarmUpOptions;
+import View.WarmupAndRecovery.AssignWorkoutView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,20 +22,17 @@ public class MainMenuView extends JFrame {
         this.currentUser = user;
 
         setTitle("Main Menu");
-        setSize(400, 400);
+        setSize(400, 500); // Slightly taller to fit extra button
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(4, 1, 10, 10));  // now 4 rows
+        setLayout(new GridLayout(6, 1, 10, 10)); // Up to 6 rows
 
         // 1) Share Progress
         JButton shareProgressButton = new JButton("Share Progress");
-        shareProgressButton.addActionListener(e -> {
-            new ShareProgressWizardPattern().setVisible(true);
-        });
+        shareProgressButton.addActionListener(e -> new ShareProgressWizardPattern().setVisible(true));
 
         // 2) Track Progress
         JButton trackProgressButton = new JButton("Track Progress");
         trackProgressButton.addActionListener(e -> {
-            // Launch your Track Progress window
             try {
                 new TrackProgressController(currentUser);
             } catch (DBError ex) {
@@ -43,7 +42,7 @@ public class MainMenuView extends JFrame {
             dispose();
         });
 
-        // 3) Support Tickets
+        // 3) Support
         JButton supportButton = new JButton("Support");
         supportButton.addActionListener(e -> {
             try {
@@ -55,7 +54,11 @@ public class MainMenuView extends JFrame {
             dispose();
         });
 
-        // 4) Logout
+        // 4) Warmup and Recovery
+        JButton warmupRecoveryButton = new JButton("Warmup and Recovery");
+        warmupRecoveryButton.addActionListener(e -> new ViewWarmUpOptions().setVisible(true));
+
+        // 5) Logout
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Logging out...");
@@ -63,11 +66,21 @@ public class MainMenuView extends JFrame {
             new LoginView(new LoginController());
         });
 
-        // add buttons in order
+        // 🔥 6) Trainer Only: Assign Workout
+        JButton assignWorkoutButton = new JButton("Assign Workout");
+        assignWorkoutButton.addActionListener(e -> new AssignWorkoutView().setVisible(true));
+
+        // 🔥 Add common buttons
         add(shareProgressButton);
         add(trackProgressButton);
         add(supportButton);
+        add(warmupRecoveryButton);
         add(logoutButton);
+
+        // 🔥 Only show Assign Workout if user is a Trainer
+        if (currentUser.checkUserRole(Role.TRAINER)) {
+            add(assignWorkoutButton);
+        }
 
         setLocationRelativeTo(null);
         setVisible(true);

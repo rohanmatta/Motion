@@ -1,16 +1,16 @@
 package WarmupAndRecoveryPatterns;
 
 public class WarmUpPlanFactory {
-    public static WarmUpPlan createPlan(String type) {
-        switch (type.toLowerCase()) {
-            case "cardio":
-                return new CardioWarmUp();
-            case "strength":
-                return new StrengthWarmUp();
-            case "flexibility":
-                return new FlexibilityWarmUp();
-            default:
-                throw new IllegalArgumentException("Unknown plan type: " + type);
+
+    public static WarmUpPlan createWarmUpPlan(String type) {
+        if (type.equalsIgnoreCase("Cardio")) {
+            return new CardioWarmUp();
+        } else if (type.equalsIgnoreCase("Strength")) {
+            return new StrengthWarmUp();
+        } else if (type.equalsIgnoreCase("Flexibility")) {
+            return new FlexibilityWarmUp();
+        } else {
+            return null; // No matching plan
         }
     }
 }

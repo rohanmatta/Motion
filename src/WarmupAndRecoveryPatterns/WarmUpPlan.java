@@ -1,5 +1,5 @@
 package WarmupAndRecoveryPatterns;
 
-public interface WarmUpPlan {
-    void showPlan();
+public abstract class WarmUpPlan {
+    public abstract void displayPlanDetails(); // 🔥 Force child classes to override
 }
