@@ -3,6 +3,7 @@ package Controller;
 import Model.DB.DBError;
 import Model.Login.User;
 import Model.TrackProgress.WorkoutEntry;
+import View.MainMenuView;
 import View.TrackProgress.TrackProgressView;
 
 import javax.swing.*;
@@ -21,20 +22,28 @@ public class TrackProgressController {
         this.view = new TrackProgressView();
         this.conn = new DbController().getConn();
 
+        // initial load and render
         loadSessions();
         view.updateTable(sessions);
 
+        // add‐workout wiring
         view.getAddButton().addActionListener(e -> onAdd());
+
+        // back‐to‐menu wiring
+        view.getBackButton().addActionListener(e -> {
+            view.dispose();
+            new MainMenuView(user);
+        });
     }
 
     private void loadSessions() {
         sessions.clear();
         String sql = """
-                SELECT id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight
-                  FROM Workouts
-                 WHERE user_id = ?
-                 ORDER BY `Date` DESC
-                """;
+            SELECT id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight
+              FROM Workouts
+             WHERE user_id = ?
+             ORDER BY `Date` DESC
+            """;
 
         try (PreparedStatement st = conn.prepareStatement(sql)) {
             st.setLong(1, Long.parseLong(user.getUserID()));
@@ -58,10 +67,10 @@ public class TrackProgressController {
 
     private void onAdd() {
         String sql = """
-                INSERT INTO Workouts
-                  (user_id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight)
-                VALUES (?,?,?,?,?,?)
-                """;
+            INSERT INTO Workouts
+              (user_id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight)
+            VALUES (?,?,?,?,?,?)
+            """;
         try (PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             st.setLong(1, Long.parseLong(user.getUserID()));
             st.setString(2, view.getWorkoutName());
@@ -98,5 +107,4 @@ public class TrackProgressController {
     public List<WorkoutEntry> getSessions() {
         return sessions;
     }
-
 }
