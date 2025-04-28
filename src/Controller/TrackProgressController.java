@@ -66,6 +66,30 @@ public class TrackProgressController {
     }
 
     private void onAdd() {
+        // 1) Validation
+        String workout = view.getWorkoutName();
+        int sets       = view.getSets();
+        int reps       = view.getReps();
+        int weight     = view.getWeight();
+
+        if (workout.isEmpty()) {
+            JOptionPane.showMessageDialog(view, "Workout name cannot be blank.");
+            return;
+        }
+        if (sets < 1) {
+            JOptionPane.showMessageDialog(view, "You must do at least one set.");
+            return;
+        }
+        if (reps < 1) {
+            JOptionPane.showMessageDialog(view, "Reps must be at least 1.");
+            return;
+        }
+        if (weight < 1) {
+            JOptionPane.showMessageDialog(view, "Weight must be positive.");
+            return;
+        }
+
+        // 2) Proceed with insert
         String sql = """
             INSERT INTO Workouts
               (user_id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight)
@@ -73,21 +97,21 @@ public class TrackProgressController {
             """;
         try (PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             st.setLong(1, Long.parseLong(user.getUserID()));
-            st.setString(2, view.getWorkoutName());
+            st.setString(2, workout);
             st.setDate(3, view.getDate());
-            st.setInt(4, view.getSets());
-            st.setInt(5, view.getReps());
-            st.setInt(6, view.getWeight());
+            st.setInt(4, sets);
+            st.setInt(5, reps);
+            st.setInt(6, weight);
 
             if (st.executeUpdate() == 1) {
                 ResultSet keys = st.getGeneratedKeys();
                 WorkoutEntry w = new WorkoutEntry(
                         Long.parseLong(user.getUserID()),
-                        view.getWorkoutName(),
+                        workout,
                         view.getDate(),
-                        view.getSets(),
-                        view.getReps(),
-                        view.getWeight()
+                        sets,
+                        reps,
+                        weight
                 );
                 if (keys.next()) {
                     w.setId(keys.getLong(1));

@@ -12,8 +12,10 @@ public class TrackProgressView extends JFrame {
     private final JSpinner dateSpinner   = new JSpinner(new SpinnerDateModel());
     private final JTextField nameField   = new JTextField(15);
     private final JSpinner setsSpinner   = new JSpinner(new SpinnerNumberModel(3, 1, 20, 1));
-    private final JSpinner repsSpinner   = new JSpinner(new SpinnerNumberModel(10, 1, 100, 1));
-    private final JSpinner weightSpinner = new JSpinner(new SpinnerNumberModel(45, 1, 500, 1));
+    // allow 0 reps so we can catch it in validation
+    private final JSpinner repsSpinner   = new JSpinner(new SpinnerNumberModel(10, 0, 100, 1));
+    // allow negative weight so validation sees it
+    private final JSpinner weightSpinner = new JSpinner(new SpinnerNumberModel(45, -1000, 500, 1));
     private final JButton addButton      = new JButton("Add Workout");
     private final JButton backButton     = new JButton("Back");
     private final DefaultTableModel tableModel;
