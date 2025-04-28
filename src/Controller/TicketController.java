@@ -8,10 +8,7 @@ import Model.Support.Status;
 import Model.Support.SupportUser;
 import Model.Support.Ticket;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +34,16 @@ public class TicketController {
             this.activeUser = activeUser;
             DbController dbController = new DbController();
             Connection conn = dbController.getConn();
-            PreparedStatement stmt = conn.prepareStatement("select T.ticket_id, T.subject, T.status, su.user_name, su.user_id, u.user_name, u.user_id from tickets AS T left join users su on T.support_user = su.user_id left join users u on T.user = u.user_id");
+            PreparedStatement stmt = conn.prepareStatement("""
+                    SELECT
+                        T.ticket_id, T.subject, T.status, su.user_name, su.user_id, u.user_name, u.user_id
+                    FROM
+                        tickets AS T
+                        LEFT JOIN users su
+                            ON T.support_user = su.user_id
+                        LEFT JOIN users u
+                            ON T.user = u.user_id
+                    """);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Ticket.TicketBuilder builder = new Ticket.TicketBuilder();
@@ -56,23 +62,87 @@ public class TicketController {
                     } else if (status == Status.ARCHIVED) {
                         this.archive.add(ticket);
                     }
-                    stmt = conn.prepareStatement("select u.user_id, u.user_name, m.message_content, m.message_id from messages AS m left join users u on m.user_id = u.user_id where ticket_id = ? order by sent_at");
-                    stmt.setLong(1, ticket.getTicketId());
-                    rs = stmt.executeQuery();
-                    while (rs.next()) {
-                        user = new User();
-                        user.setUserID(rs.getString("u.user_id"));
-                        user.setUserName(rs.getString("u.user_name"));
-                        Message m = new Message(rs.getString("message_content"), user);
-                        m.setId(rs.getLong("message_id"));
-                        ticket.addMessage(m);
-                    }
                 }
             }
             System.out.println(this.activeTicket);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DBError("Error getting tickets, please try again");
+        }
+    }
+
+    public void updateTicketMessages(Ticket t) throws DBError{
+        DbController dbController = new DbController();
+        Connection conn = dbController.getConn();
+        List<Message> messages = new ArrayList<>();
+        try {
+            PreparedStatement stmt = conn.prepareStatement("""
+                    SELECT
+                        u.user_id,
+                        u.user_name,
+                        m.message_content,
+                        m.message_id
+                    FROM
+                        messages AS m
+                        LEFT JOIN users u
+                            ON m.user_id = u.user_id
+                    WHERE ticket_id = ?
+                    ORDER BY sent_at
+                   """);
+            stmt.setLong(1, t.getTicketId());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setUserID(rs.getString("u.user_id"));
+                user.setUserName(rs.getString("u.user_name"));
+                Message m = new Message(rs.getString("message_content"), user);
+                m.setId(rs.getLong("message_id"));
+                messages.add(m);
+            }
+            t.setMessages(messages);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public long createTicket(Ticket t, SupportUser su) throws DBError {
+        DbController dbController = new DbController();
+        Connection conn = dbController.getConn();
+        try {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO tickets (subject, user, support_user) VALUE (?, ?, ?)");
+            stmt.setString(1, t.getSubject());
+            stmt.setLong(2, Long.parseLong(activeUser.getUserID()));
+            if (su != null) {
+                stmt.setString(3, su.getUserName());
+            } else {
+                stmt.setNull(3, Types.NULL);
+            }
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                long id = rs.getLong(1);
+                activeTicket = t;
+                t.setTicketId(id);
+                return id;
+            } else {
+                throw new DBError("Error creating ticket");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBError("Error creating ticket, please try again");
+        }
+    }
+
+    public void archiveTicket(Ticket t) throws DBError {
+        DbController dbController = new DbController();
+        Connection conn = dbController.getConn();
+        try {
+            PreparedStatement s = conn.prepareStatement("""
+                UPDATE tickets AS t SET t.status = ? WHERE t.ticket_id = ?
+                """);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DBError("Error archiving ticket, please try again");
         }
     }
 
