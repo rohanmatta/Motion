@@ -8,12 +8,14 @@ import Model.Support.Status;
 import Model.Support.SupportUser;
 import Model.Support.Ticket;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Main controller for ticketing support system
+ *
  * @author Ryan
  */
 public class TicketController {
@@ -47,16 +49,32 @@ public class TicketController {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Ticket.TicketBuilder builder = new Ticket.TicketBuilder();
-                SupportUser supportUser = new SupportUser();
-                supportUser.setUserID(String.valueOf(rs.getLong("su.user_id")));
-                supportUser.setUserName(rs.getString("su.user_name"));
-                User user = new User();
-                user.setUserID(rs.getString("u.user_id"));
-                user.setUserName(rs.getString("u.user_name"));
-                builder.setTicketId(rs.getLong("T.ticket_id")).setSupportUser(supportUser).setUser(user).setSubject(rs.getString("T.subject")).setMessages(new ArrayList<>());
+                SupportUser supportUser = null;
+                if (rs.getString("su.user_name") != null) {
+                    supportUser = new SupportUser();
+                    supportUser.setUserID(String.valueOf(rs.getLong("su.user_id")));
+                    supportUser.setUserName(rs.getString("su.user_name"));
+                }
+
+                User user = null;
+                if (rs.getString("u.user_name") != null) {
+                    user = new User();
+                    user.setUserID(rs.getString("u.user_id"));
+                    user.setUserName(rs.getString("u.user_name"));
+                }
                 Status status = Status.valueOf(rs.getString("T.status"));
+                builder
+                        .setTicketId(rs.getLong("T.ticket_id"))
+                        .setSupportUser(supportUser)
+                        .setUser(user)
+                        .setSubject(rs.getString("T.subject"))
+                        .setStatus(status)
+                        .setMessages(new ArrayList<>());
                 Ticket ticket = builder.build();
-                if (this.activeUser.checkUserRole(Role.ADMIN) || user.getUserID().equals(activeUser.getUserID()) || supportUser.getUserID().equals(activeUser.getUserID())) {
+                if (this.activeUser.checkUserRole(Role.ADMIN) ||
+                    (this.activeUser.checkUserRole(Role.SUPPORT_USER) && supportUser == null) ||
+                    (user != null && user.getUserID().equals(activeUser.getUserID())) ||
+                    (supportUser != null && supportUser.getUserID().equals(activeUser.getUserID()))) {
                     if (status == Status.ACTIVE) {
                         this.tickets.add(ticket);
                     } else if (status == Status.ARCHIVED) {
@@ -71,30 +89,33 @@ public class TicketController {
         }
     }
 
-    public void updateTicketMessages(Ticket t) throws DBError{
+    public void updateTicketMessages(Ticket t) throws DBError {
         DbController dbController = new DbController();
         Connection conn = dbController.getConn();
         List<Message> messages = new ArrayList<>();
         try {
             PreparedStatement stmt = conn.prepareStatement("""
-                    SELECT
-                        u.user_id,
-                        u.user_name,
-                        m.message_content,
-                        m.message_id
-                    FROM
-                        messages AS m
-                        LEFT JOIN users u
-                            ON m.user_id = u.user_id
-                    WHERE ticket_id = ?
-                    ORDER BY sent_at
-                   """);
+                     SELECT
+                         u.user_id,
+                         u.user_name,
+                         m.message_content,
+                         m.message_id
+                     FROM
+                         messages AS m
+                         LEFT JOIN users u
+                             ON m.user_id = u.user_id
+                     WHERE ticket_id = ?
+                     ORDER BY sent_at
+                    """);
             stmt.setLong(1, t.getTicketId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                User user = new User();
-                user.setUserID(rs.getString("u.user_id"));
-                user.setUserName(rs.getString("u.user_name"));
+                User user = null;
+                if (rs.getString("u.user_id") != null) {
+                    user = new User();
+                    user.setUserID(rs.getString("u.user_id"));
+                    user.setUserName(rs.getString("u.user_name"));
+                }
                 Message m = new Message(rs.getString("message_content"), user);
                 m.setId(rs.getLong("message_id"));
                 messages.add(m);
@@ -105,13 +126,16 @@ public class TicketController {
         }
     }
 
-    public long createTicket(Ticket t, SupportUser su) throws DBError {
+    public void createTicket(Ticket t, SupportUser su) throws DBError {
         DbController dbController = new DbController();
         Connection conn = dbController.getConn();
         try {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO tickets (subject, user, support_user) VALUE (?, ?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("""
+                    INSERT INTO tickets
+                        (subject, user, support_user)
+                    VALUES (?, ?, ?)""", Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, t.getSubject());
-            stmt.setLong(2, Long.parseLong(activeUser.getUserID()));
+            stmt.setLong(2, Long.parseLong(t.getUser().getUserID()));
             if (su != null) {
                 stmt.setString(3, su.getUserName());
             } else {
@@ -123,7 +147,6 @@ public class TicketController {
                 long id = rs.getLong(1);
                 activeTicket = t;
                 t.setTicketId(id);
-                return id;
             } else {
                 throw new DBError("Error creating ticket");
             }
@@ -138,16 +161,22 @@ public class TicketController {
         Connection conn = dbController.getConn();
         try {
             PreparedStatement s = conn.prepareStatement("""
-                UPDATE tickets AS t SET t.status = ? WHERE t.ticket_id = ?
-                """);
+                    UPDATE tickets AS t SET t.status = ? WHERE t.ticket_id = ?
+                    """);
+            s.setString(1, Status.ARCHIVED.toString());
+            s.setLong(2, t.getTicketId());
+            s.execute();
         } catch (Exception e) {
             e.printStackTrace();
             throw new DBError("Error archiving ticket, please try again");
         }
+        tickets.remove(t);
+        archive.add(t);
     }
 
     /**
      * Getter for tickets
+     *
      * @return List of all tickets
      */
     public List<Ticket> getTickets() {
@@ -156,6 +185,7 @@ public class TicketController {
 
     /**
      * Adds ticket to active list
+     *
      * @param ticket ticket to insert
      */
     public void addTicket(Ticket ticket) {
@@ -164,7 +194,8 @@ public class TicketController {
 
     /**
      * Creates a new ticket for a user
-     * @param user User to add to ticket
+     *
+     * @param user        User to add to ticket
      * @param supportUser Support User for ticket
      * @return Created Ticket
      */
@@ -176,6 +207,7 @@ public class TicketController {
 
     /**
      * Get a user's active support ticket
+     *
      * @param user User to search for
      * @return User's active ticket or null
      */
@@ -190,6 +222,7 @@ public class TicketController {
 
     /**
      * Deletes User's active ticket and archives it
+     *
      * @param user User to search for
      * @return Deleted ticket
      */
@@ -206,6 +239,7 @@ public class TicketController {
 
     /**
      * Get all archived tickets
+     *
      * @return List of all archived tickets
      */
     public List<Ticket> getArchive() {
@@ -232,7 +266,7 @@ public class TicketController {
         try {
             DbController dbController = new DbController();
             Connection conn = dbController.getConn();
-            CallableStatement stmt = conn.prepareCall("insert into messages (ticket_id, message_content, user_id) values(?,?,?)");
+            CallableStatement stmt = conn.prepareCall("INSERT INTO messages (ticket_id, message_content, user_id) VALUES(?,?,?)");
             stmt.setLong(1, activeTicket.getTicketId());
             stmt.setString(2, message.getText());
             stmt.setLong(3, Long.parseLong(message.getUser().getUserID()));
@@ -241,5 +275,23 @@ public class TicketController {
             e.printStackTrace();
         }
         this.activeTicket.addMessage(message);
+    }
+
+    public void claimActive() {
+        try {
+            DbController dbController = new DbController();
+            Connection conn = dbController.getConn();
+            PreparedStatement stmt = conn.prepareStatement("""
+                    UPDATE tickets
+                    SET support_user = ?
+                    WHERE ticket_id = ?
+                    """);
+            stmt.setLong(1, Long.parseLong(activeUser.getUserID()));
+            stmt.setLong(2, activeTicket.getTicketId());
+            stmt.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

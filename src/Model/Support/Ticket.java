@@ -14,6 +14,7 @@ public class Ticket {
     private String subject;
     private List<Message> messages;
     private User user;
+    private Status status;
     private SupportUser supportUser;
 
     /**
@@ -27,6 +28,7 @@ public class Ticket {
         private List<Message> messages = new ArrayList<>();
         private String subject;
         private User user;
+        private Status status;
         private SupportUser supportUser;
 
         public TicketBuilder setTicketId(long ticketId) {
@@ -54,14 +56,29 @@ public class Ticket {
             return this;
         }
 
+        public TicketBuilder setStatus(Status status) {
+            this.status = status;
+            return this;
+        }
+
         public Ticket build() {
             Ticket ticket = new Ticket();
             ticket.messages = this.messages;
             ticket.user = this.user;
             ticket.supportUser = this.supportUser;
             ticket.ticketId = this.ticketId;
+            ticket.subject = this.subject;
+            ticket.status = this.status;
             return ticket;
         }
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     /**
