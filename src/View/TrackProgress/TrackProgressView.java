@@ -8,7 +8,6 @@ import java.awt.*;
 import java.sql.Date;
 import java.util.List;
 
-
 public class TrackProgressView extends JFrame {
     private final JSpinner dateSpinner   = new JSpinner(new SpinnerDateModel());
     private final JTextField nameField   = new JTextField(15);
@@ -16,6 +15,7 @@ public class TrackProgressView extends JFrame {
     private final JSpinner repsSpinner   = new JSpinner(new SpinnerNumberModel(10, 1, 100, 1));
     private final JSpinner weightSpinner = new JSpinner(new SpinnerNumberModel(45, 1, 500, 1));
     private final JButton addButton      = new JButton("Add Workout");
+    private final JButton backButton     = new JButton("Back");
     private final DefaultTableModel tableModel;
     private final JTable table;
 
@@ -28,13 +28,14 @@ public class TrackProgressView extends JFrame {
         );
         table = new JTable(tableModel);
 
-        //Form Layout
+        // Form Layout
         JPanel form = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
-        form.add(new JLabel("Date:"));        form.add(dateSpinner);
-        form.add(new JLabel("Workout:"));     form.add(nameField);
-        form.add(new JLabel("Sets:"));        form.add(setsSpinner);
-        form.add(new JLabel("Reps:"));        form.add(repsSpinner);
-        form.add(new JLabel("Weight:"));      form.add(weightSpinner);
+        form.add(new JLabel("Date:"));    form.add(dateSpinner);
+        form.add(new JLabel("Workout:")); form.add(nameField);
+        form.add(new JLabel("Sets:"));    form.add(setsSpinner);
+        form.add(new JLabel("Reps:"));    form.add(repsSpinner);
+        form.add(new JLabel("Weight:"));  form.add(weightSpinner);
+        form.add(backButton);
         form.add(addButton);
 
         setLayout(new BorderLayout(8,8));
@@ -47,15 +48,18 @@ public class TrackProgressView extends JFrame {
         setVisible(true);
     }
 
-    //getters for controller
-    public Date getDate()              { return new Date(((java.util.Date) dateSpinner.getValue()).getTime()); }
-    public String getWorkoutName()     { return nameField.getText().trim(); }
-    public int    getSets()            { return (Integer) setsSpinner.getValue(); }
-    public int    getReps()            { return (Integer) repsSpinner.getValue(); }
-    public int    getWeight()          { return (Integer) weightSpinner.getValue(); }
-    public JButton getAddButton()      { return addButton; }
+    // getters for controller
+    public Date    getDate()          { return new Date(((java.util.Date) dateSpinner.getValue()).getTime()); }
+    public String  getWorkoutName()   { return nameField.getText().trim(); }
+    public int     getSets()          { return (Integer) setsSpinner.getValue(); }
+    public int     getReps()          { return (Integer) repsSpinner.getValue(); }
+    public int     getWeight()        { return (Integer) weightSpinner.getValue(); }
+    public JButton getAddButton()     { return addButton; }
+    public JButton getBackButton()    { return backButton; }
 
-
+    /**
+     * Refreshes the table with a new list of entries
+     */
     public void updateTable(List<WorkoutEntry> entries) {
         tableModel.setRowCount(0);
         for (WorkoutEntry e : entries) {
