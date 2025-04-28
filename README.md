@@ -19,6 +19,18 @@ Use Cases Scoped for Design and Implementation (Track Progress System - Athlete)
 8. Athlete Updates Workout Notes
 9. The athlete adds or modifies notes on past workout sessions to track progress and make edits.
 
+Use Cases Scoped for Design and Implementation (Share Progress System - User)
+
+1. The user logs into the system to access their workout history and sharing features.
+2. User Views Shareable Workouts
+    - The user selects a past workout session from their history to share with others.
+3. User Adds Captions or Hashtags
+    - The user inputs captions, hashtags, or additional details to personalize the shared workout.
+4. User Reviews the Post
+    - The user reviews the selected workout and added details to ensure accuracy before sharing.
+5. User Confirms and Shares the Post
+    - The user confirms the post details and shares the workout on their desired platform.
+
 Make sure your project includes a README.TXT file
 and that this file describes your refactoring 
 implementations i.e. the class or classes used and who implemented them.
