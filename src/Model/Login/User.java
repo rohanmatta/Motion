@@ -1,7 +1,5 @@
 package Model.Login;
 
-import java.util.List;
-
 /**
  * Model class representing a user in the system.
  */
@@ -84,7 +82,9 @@ public class User {
     }
 
     public void addUserRole(Role role) {
-        this.userRole = this.userRole + role.getValue();
+        if (!checkUserRole(role)) {
+            this.userRole = this.userRole + role.getValue();
+        }
     }
 
     public void removeUserRole(Role role) {
@@ -92,7 +92,9 @@ public class User {
     }
 
     public boolean checkUserRole(Role role) {
-        return (this.userRole & role.getValue()) == role.getValue() || (this.userRole & Role.ADMIN.getValue()) == role.getValue();
+        boolean hasRole = (this.userRole & role.getValue()) == role.getValue();
+        boolean isAdmin = (this.userRole & Role.ADMIN.getValue()) == Role.ADMIN.getValue();
+        return hasRole || isAdmin;
     }
 
     /**

@@ -5,7 +5,9 @@ import Model.Login.User;
 import View.Login.LoginView;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * Controller class responsible for managing the login view.
@@ -80,36 +82,10 @@ public class LoginController {
     }
 
     public boolean createUser(User user) throws DBError {
-        try {
-            DbController dbController = new DbController();
-            Connection conn = dbController.getConn();
-            System.out.println(user);
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (user_name, email, password, roles) VALUES (?, ?, ?, ?)");
-            stmt.setString(1, user.getUserName());
-            stmt.setString(2, user.getUserEmail());
-            stmt.setString(3, passwordEncoder.encode(user.getUserPassword()));
-            stmt.setLong(4, user.getUserRole());
-            boolean rs = stmt.execute();
-
-            stmt = conn.prepareStatement("select user_id from users where users.user_name = ?");
-            stmt.setString(1, user.getUserName());
-            ResultSet rs2 = stmt.executeQuery();
-            if (rs2.next()) {
-                user.setUserID(String.valueOf(rs2.getLong("user_id")));
-                this.setUser(user);
-                return true;
-            }
-            return false;
-        } catch (Exception e) {
-            if (e instanceof SQLIntegrityConstraintViolationException ex) {
-                if (ex.getMessage().contains("users.unique_email")) {
-                    throw new DBError("Email already in use");
-                } else if (ex.getMessage().contains("users.unique_username")) {
-                    throw new DBError("Username already in use");
-                }
-            }
-            e.printStackTrace();
-            return false;
+        if (UserController.createUser(user) != null) {
+            this.setUser(user);
+            return true;
         }
+        return false;
     }
 }

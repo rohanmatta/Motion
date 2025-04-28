@@ -1,16 +1,16 @@
 package View;
 
 import Controller.LoginController;
-import Controller.TrackProgressController;
 import Controller.TicketController;
+import Controller.TrackProgressController;
+import Controller.UserController;
 import Model.DB.DBError;
-import Model.Login.User;
 import Model.Login.Role;
-import View.Login.LoginView;
+import Model.Login.User;
 import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
 import View.Support.TicketListView;
-import View.WarmupAndRecovery.ViewWarmUpOptions;
 import View.WarmupAndRecovery.AssignWorkoutView;
+import View.WarmupAndRecovery.ViewWarmUpOptions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,18 +63,27 @@ public class MainMenuView extends JFrame {
         logoutButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Logging out...");
             dispose();
-            new LoginView(new LoginController());
+            new LoginController();
         });
 
         // 🔥 6) Trainer Only: Assign Workout
         JButton assignWorkoutButton = new JButton("Assign Workout");
         assignWorkoutButton.addActionListener(e -> new AssignWorkoutView().setVisible(true));
 
+        JButton manageUsersButton = new JButton("Manage Users");
+        manageUsersButton.addActionListener(e -> {
+            this.dispose();
+            new UserController(user);
+        });
+
         // 🔥 Add common buttons
         add(shareProgressButton);
         add(trackProgressButton);
         add(supportButton);
         add(warmupRecoveryButton);
+        if (user.checkUserRole(Role.ADMIN)) {
+            add(manageUsersButton);
+        }
         add(logoutButton);
 
         // 🔥 Only show Assign Workout if user is a Trainer
