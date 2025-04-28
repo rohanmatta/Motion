@@ -52,16 +52,22 @@ public class TrackProgressView extends JFrame {
         setVisible(true);
     }
 
-    // getters for controller
-    public Date    getDate()        { return new Date(((java.util.Date) dateSpinner.getValue()).getTime()); }
-    public String  getWorkoutName() { return nameField.getText().trim(); }
-    public int     getSets()        { return (Integer) setsSpinner.getValue(); }
-    public int     getReps()        { return (Integer) repsSpinner.getValue(); }
-    public int     getWeight()      { return (Integer) weightSpinner.getValue(); }
-    public JButton getAddButton()   { return addButton; }
-    public JButton getDeleteButton(){ return deleteButton; }
-    public JButton getBackButton()  { return backButton; }
-    public JTable  getTable()       { return table; }
+    // getters for controller and tests
+    public JSpinner   getDateSpinner()   { return dateSpinner; }
+    public JTextField getNameField()     { return nameField; }
+    public JSpinner   getSetsSpinner()   { return setsSpinner; }
+    public JSpinner   getRepsSpinner()   { return repsSpinner; }
+    public JSpinner   getWeightSpinner() { return weightSpinner; }
+    public JButton    getAddButton()     { return addButton; }
+    public JButton    getDeleteButton()  { return deleteButton; }
+    public JButton    getBackButton()    { return backButton; }
+    public JTable     getTable()         { return table; }
+
+    public Date  getDate()        { return new Date(((java.util.Date) dateSpinner.getValue()).getTime()); }
+    public String getWorkoutName() { return nameField.getText().trim(); }
+    public int    getSets()        { return (Integer) setsSpinner.getValue(); }
+    public int    getReps()        { return (Integer) repsSpinner.getValue(); }
+    public int    getWeight()      { return (Integer) weightSpinner.getValue(); }
 
     /**
      * Refreshes the table with a new list of entries

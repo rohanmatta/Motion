@@ -23,17 +23,11 @@ public class TrackProgressController {
         this.view = new TrackProgressView();
         this.conn = new DbController().getConn();
 
-        // initial load and render
         loadSessions();
         view.updateTable(sessions);
 
-        // add‐workout wiring
         view.getAddButton().addActionListener(e -> onAdd());
-
-        // delete‐workout wiring
         view.getDeleteButton().addActionListener(e -> onDelete());
-
-        // back‐to‐menu wiring
         view.getBackButton().addActionListener(e -> {
             view.dispose();
             new MainMenuView(user);
@@ -70,7 +64,6 @@ public class TrackProgressController {
     }
 
     private void onAdd() {
-        // 1) Validation
         String workout = view.getWorkoutName();
         int sets       = view.getSets();
         int reps       = view.getReps();
@@ -93,7 +86,6 @@ public class TrackProgressController {
             return;
         }
 
-        // 2) Proceed with insert
         String sql = """
             INSERT INTO Workouts
               (user_id, Workout_Name, `Date`, Sets, Average_Reps, Average_Weight)
@@ -111,15 +103,9 @@ public class TrackProgressController {
                 ResultSet keys = st.getGeneratedKeys();
                 WorkoutEntry w = new WorkoutEntry(
                         Long.parseLong(user.getUserID()),
-                        workout,
-                        view.getDate(),
-                        sets,
-                        reps,
-                        weight
+                        workout, view.getDate(), sets, reps, weight
                 );
-                if (keys.next()) {
-                    w.setId(keys.getLong(1));
-                }
+                if (keys.next()) w.setId(keys.getLong(1));
                 sessions.add(0, w);
                 view.updateTable(sessions);
                 JOptionPane.showMessageDialog(view, "Workout added!");
@@ -139,10 +125,7 @@ public class TrackProgressController {
             return;
         }
         int confirm = JOptionPane.showConfirmDialog(
-                view,
-                "Really delete this workout?",
-                "Confirm Delete",
-                JOptionPane.YES_NO_OPTION
+                view, "Really delete this workout?", "Confirm Delete", JOptionPane.YES_NO_OPTION
         );
         if (confirm != JOptionPane.YES_OPTION) return;
 
@@ -162,6 +145,11 @@ public class TrackProgressController {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(view, "Error deleting workout.");
         }
+    }
+
+    // expose view for tests
+    public TrackProgressView getView() {
+        return view;
     }
 
     public List<WorkoutEntry> getSessions() {
