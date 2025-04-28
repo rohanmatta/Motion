@@ -58,6 +58,7 @@ public class SupportTicketView extends JFrame {
     private void addActionListeners() {
         sendButton.addActionListener((e) -> {
             controller.addMessage(new Message(chatTextArea.getText(), controller.getActiveUser()));
+            chatTextArea.setText("");
             updateMessages();
         });
         backButton.addActionListener((e) -> {
