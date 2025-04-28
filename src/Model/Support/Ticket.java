@@ -1,6 +1,5 @@
 package Model.Support;
 
-import Controller.DbController;
 import Model.Login.User;
 
 import java.util.ArrayList;
@@ -40,11 +39,6 @@ public class Ticket {
             return this;
         }
 
-        public TicketBuilder addMessage(Message message) {
-            this.messages.add(message);
-            return this;
-        }
-
         public TicketBuilder setMessages(List<Message> messages) {
             this.messages = new ArrayList<>(messages);
             return this;
@@ -80,12 +74,15 @@ public class Ticket {
 
     /**
      * Add new message to conversation
+     *
      * @param message message to add
-     * @return new list of all messages
      */
-    public List<Message> addMessage(Message message) {
+    public void addMessage(Message message) {
         this.messages.add(message);
-        return this.messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 
     /**
