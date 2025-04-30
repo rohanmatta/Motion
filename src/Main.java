@@ -1,6 +1,4 @@
-import Controller.LoginController;
 import Controller.ShareProgressController;
-import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
 
 import javax.swing.*;
 
@@ -9,14 +7,14 @@ public class Main {
         System.out.println("Hello, World!");
         // Init login controller
 
-        new LoginController();
+        // new LoginController();
         //test
 
         // Initialize the ShareProgressController
-        // ShareProgressController controller = new ShareProgressController();
+        ShareProgressController controller = new ShareProgressController();
 
         // Show the ShareProgressWizardPattern
-        // controller.showWizard();
+        controller.showWizard();
 
     }
 }
