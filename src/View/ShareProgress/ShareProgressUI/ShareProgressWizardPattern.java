@@ -37,6 +37,7 @@ public class ShareProgressWizardPattern extends JFrame {
         ListOfWorkouts = new JComboBox<>();
 
         // Fill dropdown with workouts 1–5
+        ListOfWorkouts.addItem(""); // Placeholder for forced selection
         for (int i = 1; i <= 5; i++) {
             ListOfWorkouts.addItem(String.valueOf(i));
         }
@@ -84,6 +85,23 @@ public class ShareProgressWizardPattern extends JFrame {
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // ACCEPTED USE CASE TEST
+                if (currentStep == 1) {
+                    String selected = (String) ListOfWorkouts.getSelectedItem();
+                    if (selected == null || selected.isBlank()) {
+                        JOptionPane.showMessageDialog(mainPanel, "Please select a workout before continuing.");
+                        return;
+                    } else {
+                        JOptionPane.showMessageDialog(mainPanel, "Workout " + selected + " selected.");
+                    }
+                }
+
+                if ((currentStep == 2 || currentStep == 3) && inputField.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(mainPanel, "Please enter text before continuing.");
+                    return;
+                }
+
+
                 if (currentStep < totalSteps) {
                     currentStep++;
                     updateStep();
