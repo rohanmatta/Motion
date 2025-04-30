@@ -1,11 +1,17 @@
 package View.ShareProgress.ShareProgressUI;
 
+import Controller.TrackProgressController;
+import Model.Login.User;
+import Model.TrackProgress.WorkoutEntry;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class ShareProgressWizardPattern extends JFrame {
+    private final User user;
     private JPanel mainPanel;
     private JLabel titleLabel; // Step title
     private JLabel stepLabel;  // Step description
@@ -18,9 +24,11 @@ public class ShareProgressWizardPattern extends JFrame {
 
     private int currentStep = 1;
     private final int totalSteps = 4;
-    private int selectedWorkout = 1;
+    private String selectedWorkoutName = "";
 
-    public ShareProgressWizardPattern() {
+    public ShareProgressWizardPattern(User user) {
+        this.user = user;
+
         setTitle("Share Progress Wizard");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
@@ -29,18 +37,14 @@ public class ShareProgressWizardPattern extends JFrame {
         // Initialize components
         mainPanel = new JPanel(new BorderLayout());
         titleLabel = new JLabel("Step 1 of 4", SwingConstants.CENTER);
-        stepLabel = new JLabel("Step 1: Select a workout (1–5)", SwingConstants.CENTER);
+        stepLabel = new JLabel("Step 1: Select a workout", SwingConstants.CENTER);
         nextButton = new JButton("Next");
         backButton = new JButton("Back");
         progressBar = new JProgressBar(0, totalSteps);
         inputField = new JTextField(20);
         ListOfWorkouts = new JComboBox<>();
 
-        // Fill dropdown with workouts 1–5
-        ListOfWorkouts.addItem(""); // Placeholder for forced selection
-        for (int i = 1; i <= 5; i++) {
-            ListOfWorkouts.addItem(String.valueOf(i));
-        }
+        populateWorkoutDropdown();
 
         // Set initial progress
         progressBar.setValue(currentStep);
@@ -60,7 +64,6 @@ public class ShareProgressWizardPattern extends JFrame {
         buttonPanel.add(nextButton);
 
         // Add everything to main panel
-        mainPanel.add(progressBar, BorderLayout.NORTH);
         JPanel middleContainer = new JPanel(new BorderLayout());
         middleContainer.add(topPanel, BorderLayout.NORTH);
         middleContainer.add(centerPanel, BorderLayout.CENTER);
@@ -68,8 +71,6 @@ public class ShareProgressWizardPattern extends JFrame {
         mainPanel.add(progressBar, BorderLayout.NORTH);
         mainPanel.add(middleContainer, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-
-        mainPanel.add(buttonPanel, BorderLayout.PAGE_END);
 
         // Button logic
         backButton.addActionListener(new ActionListener() {
@@ -85,14 +86,14 @@ public class ShareProgressWizardPattern extends JFrame {
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // ACCEPTED USE CASE TEST
                 if (currentStep == 1) {
                     String selected = (String) ListOfWorkouts.getSelectedItem();
                     if (selected == null || selected.isBlank()) {
                         JOptionPane.showMessageDialog(mainPanel, "Please select a workout before continuing.");
                         return;
                     } else {
-                        JOptionPane.showMessageDialog(mainPanel, "Workout " + selected + " selected.");
+                        selectedWorkoutName = selected;
+                        JOptionPane.showMessageDialog(mainPanel, "Workout \"" + selectedWorkoutName + "\" selected.");
                     }
                 }
 
@@ -101,12 +102,11 @@ public class ShareProgressWizardPattern extends JFrame {
                     return;
                 }
 
-
                 if (currentStep < totalSteps) {
                     currentStep++;
                     updateStep();
                 } else {
-                    JOptionPane.showMessageDialog(mainPanel, "You selected workout #" + selectedWorkout + ".\nPost shared!");
+                    JOptionPane.showMessageDialog(mainPanel, "You selected workout: \"" + selectedWorkoutName + "\".\nPost shared!");
                 }
             }
         });
@@ -121,7 +121,7 @@ public class ShareProgressWizardPattern extends JFrame {
 
         switch (currentStep) {
             case 1:
-                stepLabel.setText("Step 1: Select a workout (1–5)");
+                stepLabel.setText("Step 1: Select a workout");
                 centerPanel.add(ListOfWorkouts, BorderLayout.CENTER);
                 break;
             case 2:
@@ -138,9 +138,7 @@ public class ShareProgressWizardPattern extends JFrame {
                 break;
             case 4:
                 stepLabel.setText("Step 4: Confirm your selection");
-                String selected = (String) ListOfWorkouts.getSelectedItem();
-                selectedWorkout = selected != null ? Integer.parseInt(selected) : 1;
-                inputField.setText("You selected workout #" + selectedWorkout);
+                inputField.setText("You selected workout: \"" + selectedWorkoutName + "\"");
                 inputField.setEditable(false);
                 centerPanel.add(inputField, BorderLayout.CENTER);
                 break;
@@ -154,9 +152,27 @@ public class ShareProgressWizardPattern extends JFrame {
         nextButton.setText(currentStep < totalSteps ? "Next" : "Finish");
     }
 
+    private void populateWorkoutDropdown() {
+        try {
+            TrackProgressController trackController = new TrackProgressController(user);
+            List<WorkoutEntry> workouts = trackController.getSessions();
+            ListOfWorkouts.removeAllItems();
+            ListOfWorkouts.addItem(""); // Placeholder
+
+            for (WorkoutEntry w : workouts) {
+                ListOfWorkouts.addItem(w.getWorkoutName());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Failed to load workouts.");
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            ShareProgressWizardPattern wizard = new ShareProgressWizardPattern();
+            User dummyUser = new User();
+            dummyUser.setUserID("1"); // Set to a valid user ID in your DB
+            ShareProgressWizardPattern wizard = new ShareProgressWizardPattern(dummyUser);
             wizard.setVisible(true);
         });
     }

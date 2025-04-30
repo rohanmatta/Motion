@@ -28,7 +28,7 @@ public class MainMenuView extends JFrame {
 
         // 1) Share Progress
         JButton shareProgressButton = new JButton("Share Progress");
-        shareProgressButton.addActionListener(e -> new ShareProgressWizardPattern().setVisible(true));
+        shareProgressButton.addActionListener(e -> new ShareProgressWizardPattern(currentUser).setVisible(true));
 
         // 2) Track Progress
         JButton trackProgressButton = new JButton("Track Progress");

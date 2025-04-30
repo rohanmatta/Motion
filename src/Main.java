@@ -1,20 +1,14 @@
-import Controller.ShareProgressController;
+import Controller.LoginController;
+import Model.Login.User;
+import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
 
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
-        // Init login controller
 
-        // new LoginController();
-        //test
-
-        // Initialize the ShareProgressController
-        ShareProgressController controller = new ShareProgressController();
-
-        // Show the ShareProgressWizardPattern
-        controller.showWizard();
-
+        // Initialize login controller if needed
+        new LoginController();
     }
 }
