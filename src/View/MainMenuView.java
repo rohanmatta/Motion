@@ -11,6 +11,8 @@ import View.ShareProgress.ShareProgressUI.ShareProgressWizardPattern;
 import View.Support.TicketListView;
 import View.WarmupAndRecovery.AssignWorkoutView;
 import View.WarmupAndRecovery.ViewWarmUpOptions;
+import View.Trainer.ClientHistoryView;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,28 +70,39 @@ public class MainMenuView extends JFrame {
 
         // 🔥 6) Trainer Only: Assign Workout
         JButton assignWorkoutButton = new JButton("Assign Workout");
-        assignWorkoutButton.addActionListener(e -> new AssignWorkoutView().setVisible(true));
+        assignWorkoutButton.addActionListener(e -> new AssignWorkoutView(currentUser)); // ✅ pass the logged-in user
+
+        JButton clientHistoryButton = new JButton("View Client History");
+        clientHistoryButton.addActionListener(e -> new ClientHistoryView());
+
 
         JButton manageUsersButton = new JButton("Manage Users");
         manageUsersButton.addActionListener(e -> {
             this.dispose();
-            new UserController(user);
+            new View.Login.ManageUsers(new UserController(user));
         });
+
 
         // 🔥 Add common buttons
         add(shareProgressButton);
         add(trackProgressButton);
         add(supportButton);
         add(warmupRecoveryButton);
+
         if (user.checkUserRole(Role.ADMIN)) {
             add(manageUsersButton);
         }
         add(logoutButton);
+        System.out.println("Logged in user: " + user.getUserName());
+        System.out.println("Is Trainer? " + user.checkUserRole(Role.TRAINER));
 
         // 🔥 Only show Assign Workout if user is a Trainer
-        if (currentUser.checkUserRole(Role.TRAINER)) {
+        if (currentUser.checkUserRole(Role.TRAINER) && !currentUser.checkUserRole(Role.ADMIN)) {
             add(assignWorkoutButton);
+            add(clientHistoryButton);
         }
+
+
 
         setLocationRelativeTo(null);
         setVisible(true);
